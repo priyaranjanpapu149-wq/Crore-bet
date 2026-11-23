@@ -1,0 +1,763 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================
+// ADMIN & AUTH
+// ============================================================
+
+model Admin {
+  id           String    @id @default(uuid())
+  email        String    @unique
+  name         String
+  passwordHash String
+  twofaSecret  String?                          // already there — keep
+  twofaEnabled Boolean   @default(false)        // already there — keep
+  twofaRecoveryCodes String[] @default([])      // ADD — bcrypt hashes
+  tokenVersion Int       @default(0)            // ADD — bump to invalidate sessions
+  role         String    @default("admin")
+  active       Boolean   @default(true)
+  lastLogin    DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  sessions AdminSession[]
+  actions  AuditLog[]
+
+  @@map("admins")
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  adminId   String?
+  action    String
+  details   String?
+  ipAddress String?
+  createdAt DateTime @default(now())
+
+  admin Admin? @relation(fields: [adminId], references: [id], onDelete: SetNull)
+
+  @@index([adminId, createdAt])
+  @@map("audit_logs")
+}
+
+// ============================================================
+// USERS
+// ============================================================
+
+model User {
+  id           String    @id @default(uuid())
+  mobile       String    @unique
+  name         String
+  email        String?   @unique
+  passwordHash String
+  wallet       Decimal   @default(0) @db.Decimal(15, 2)
+  active       Boolean   @default(true)
+  verified     Boolean   @default(false)
+  mPinHash     String?
+  referCode    String?   @unique
+  referredBy   String?
+  lastSeen     DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  // ─── Location tracking (silent report from app) ─────────
+  lastLat         Float?
+  lastLng         Float?
+  lastLocationAt  DateTime?
+  failedLogins   Int       @default(0)
+  lockedUntil    DateTime?
+  lastDeviceId   String?
+  lastIp         String?
+  lastLocation   String?
+
+  sessions     UserSession[]
+  refreshTokens RefreshToken[]
+  bids         Bid[]
+  starlineBets StarlineBet[]
+  transactions Transaction[]
+  withdrawals  Withdrawal[]
+  bankDetails  BankDetail[]
+  chatMessages ChatMessage[]
+  upiVerifs    UpiVerification[]
+
+  @@index([mobile])
+  @@index([referCode])
+  @@index([referredBy])
+  @@map("users")
+}
+
+// ✅ Add this model
+model RefreshToken {
+  id        String   @id @default(uuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  revoked   Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([token])
+  @@map("refresh_tokens")
+}
+
+model UserSession {
+  id           String   @id @default(uuid())
+  userId       String
+  refreshToken String   @unique
+  deviceInfo   String?
+  ipAddress    String?
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("user_sessions")
+}
+
+model BankDetail {
+  id         String   @id @default(uuid())
+  userId     String
+  holderName String?
+  accountNo  String?
+  ifsc       String?
+  upi        String?
+  phonepe    String?
+  gpay       String?
+  paytm      String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId])
+  @@map("bank_details")
+}
+
+// ============================================================
+// GAMES & MARKETS
+// ============================================================
+
+model Market {
+  id              String   @id @default(uuid())
+  name            String   @unique
+  slug            String   @unique
+  type            String   @default("regular")
+  openTime        String?
+  closeTime       String?
+  days            String?
+  autoResult      Boolean  @default(false)
+  active          Boolean  @default(true)
+
+  // 🚀 Emergency shutdown — admin kill switch
+  shutdown        Boolean  @default(false)
+
+  resultLockedAt   DateTime?
+  resultLockedDate String?
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  bids        Bid[]
+  rates       Rate[]
+  results     Result[]
+
+  @@map("markets")
+}
+
+model Bid {
+  id        String    @id @default(uuid())
+  userId    String
+  marketId  String
+  gameType  String
+  session   String?
+  digits    String
+  amount    Decimal   @db.Decimal(15, 2)
+  payout    Decimal?  @db.Decimal(15, 2)
+  status    String    @default("pending")
+  bidDate   DateTime  @default(now())
+  createdAt DateTime  @default(now())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  market Market @relation(fields: [marketId], references: [id], onDelete: Cascade)
+
+  @@index([userId, bidDate])
+  @@index([marketId, bidDate])
+  @@index([status])
+  @@map("bids")
+}
+
+model StarlineBet {
+  id         String   @id @default(uuid())
+  userId     String
+  marketName String
+  gameType   String
+  digits     String
+  amount     Decimal  @db.Decimal(15, 2)
+  status     String   @default("pending")
+  bidDate    DateTime @default(now())
+  createdAt  DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, bidDate])
+  @@index([marketName, bidDate])
+  @@map("starline_bets")
+}
+
+model Rate {
+  id       String  @id @default(uuid())
+  marketId String
+  gameType String
+  payout   Decimal @db.Decimal(10, 2)
+  minBet   Decimal @default(10) @db.Decimal(15, 2)
+  maxBet   Decimal @default(10000) @db.Decimal(15, 2)
+
+  market Market @relation(fields: [marketId], references: [id], onDelete: Cascade)
+
+  @@unique([marketId, gameType])
+  @@map("rates")
+}
+
+model Result {
+  id          String   @id @default(uuid())
+  marketId    String
+  session     String
+  openResult  String?
+  closeResult String?
+  jodiResult  String?
+  pannaResult String?
+  resultDate  DateTime
+  declaredAt  DateTime @default(now())
+
+  market Market @relation(fields: [marketId], references: [id], onDelete: Cascade)
+
+  @@index([marketId, resultDate])
+  @@map("results")
+}
+
+// ============================================================
+// WALLET
+// ============================================================
+
+model Transaction {
+  id            String   @id @default(uuid())
+  userId        String
+  amount        Decimal  @db.Decimal(15, 2)
+  type          Int
+  remark        String
+  balanceBefore Decimal  @db.Decimal(15, 2)
+  balanceAfter  Decimal  @db.Decimal(15, 2)
+  gameId        String?
+  reference     String?
+  createdAt     DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@index([type])
+  @@map("transactions")
+}
+
+model Withdrawal {
+  id         String    @id @default(uuid())
+  userId     String
+  amount     Decimal   @db.Decimal(15, 2)
+  status     String    @default("pending")
+  bankId     String?
+  remark     String?
+  acceptedAt DateTime?
+  createdAt  DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@index([status])
+  @@map("withdrawals")
+}
+
+model DepositBonus {
+  id     String  @id @default(uuid())
+  min    Decimal @db.Decimal(15, 2)
+  max    Decimal @db.Decimal(15, 2)
+  bonus  Decimal @db.Decimal(15, 2)
+  active Boolean @default(true)
+
+  @@map("deposit_bonuses")
+}
+
+model UpiVerification {
+  id         String   @id @default(uuid())
+  userId     String
+  amount     Decimal  @db.Decimal(15, 2)
+  utr        String?
+  screenshot String?
+  status     String   @default("pending")
+  createdAt  DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([status])
+  @@map("upi_verifications")
+}
+
+// ============================================================
+// REFERRALS
+// ============================================================
+
+model Referral {
+  id             String    @id @default(uuid())
+  referrerMobile String
+  referrerName   String?
+  referrerPhone  String?
+  refereeMobile  String
+  refereeName    String?
+  referralCode   String
+  depositAmount  Decimal   @default(0) @db.Decimal(15, 2)
+  cashbackAmount Decimal   @default(0) @db.Decimal(15, 2)
+  status         String    @default("pending")
+  paidAt         DateTime?
+  notes          String?
+  createdAt      DateTime  @default(now())
+
+  @@unique([refereeMobile])
+  @@index([referrerMobile])
+  @@index([status])
+  @@map("referrals")
+}
+
+// ============================================================
+// OTP
+// ============================================================
+
+model OtpSession {
+  id             String   @id @default(uuid())
+  mobile         String
+  verificationId String
+  purpose        String
+  used           Boolean  @default(false)
+  attempts       Int      @default(0)
+  expiresAt      DateTime
+  createdAt      DateTime @default(now())
+
+  @@index([mobile, purpose])
+  @@index([verificationId])
+  @@map("otp_sessions")
+}
+
+// ============================================================
+// MASTER PANEL
+// ============================================================
+
+model ApiGame {
+  id         String    @id @default(uuid())
+  name       String    @unique
+  slug       String    @unique
+  domain     String
+  apiUrl     String
+  apiSecret  String
+  minDeposit Decimal   @default(100) @db.Decimal(15, 2)
+  minBet     Decimal   @default(10) @db.Decimal(15, 2)
+  active     Boolean   @default(true)
+  lastSyncAt DateTime?
+  createdAt  DateTime  @default(now())
+
+  @@map("api_games")
+}
+
+// ============================================================
+// SYSTEM
+// ============================================================
+
+model Setting {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
+
+  @@map("settings")
+}
+
+model Notice {
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  @@map("notices")
+}
+
+model AppConfig {
+  id              String   @id @default(uuid())
+  version         String
+  forceUpdate     Boolean  @default(false)
+  minVersion      String?
+  updateUrl       String?
+  maintenanceMode Boolean  @default(false)
+  updatedAt       DateTime @updatedAt
+
+  @@map("app_configs")
+}
+
+model ChatMessage {
+  id        String   @id @default(uuid())
+  userId    String
+  sender    String
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@map("chat_messages")
+}
+
+// ============================================================
+// PAYMENT GATEWAY
+// ============================================================
+
+model GatewayConfig {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  displayName String
+  merchantId  String?
+  apiKey      String?
+  apiSecret   String?
+  webhookKey  String?
+  enabled     Boolean  @default(false)
+  minAmount   Decimal  @default(100) @db.Decimal(15, 2)
+  maxAmount   Decimal  @default(100000) @db.Decimal(15, 2)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("gateway_configs")
+}
+
+model AutoDeposit {
+  id           String   @id @default(uuid())
+  userId       String
+  gateway      String
+  orderId      String   @unique
+  gatewayTxnId String?
+  amount       Decimal  @db.Decimal(15, 2)
+  status       String   @default("pending")
+  rawResponse  String?
+  creditedAt   DateTime?
+  createdAt    DateTime @default(now())
+
+  @@index([userId, createdAt])
+  @@index([status])
+  @@index([gateway, orderId])
+  @@map("auto_deposits")
+}
+
+model WithdrawOption {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  minAmount Decimal  @default(100) @db.Decimal(15, 2)
+  maxAmount Decimal  @default(50000) @db.Decimal(15, 2)
+  fee       Decimal  @default(0) @db.Decimal(10, 2)
+  enabled   Boolean  @default(true)
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@map("withdraw_options")
+}
+
+// ============================================================
+// AUTO RESULT SYSTEM
+// ============================================================
+
+model AutoResultConfig {
+  id        String    @id @default(uuid())
+  site      String
+  siteUrl   String
+  session   String    @default("open")
+  delayMin  Int       @default(0)
+  status    String    @default("not_working")
+  lastCheck DateTime?
+  priority  Int       @default(0)
+  active    Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("auto_result_configs")
+}
+
+model AutoHistory {
+  id          String   @id @default(uuid())
+  configId    String?
+  marketName  String
+  session     String
+  resultValue String
+  source      String
+  status      String   @default("success")
+  message     String?
+  runAt       DateTime @default(now())
+
+  @@index([marketName, runAt])
+  @@index([status])
+  @@map("auto_histories")
+}
+
+// ============================================================
+// CHARTS
+// ============================================================
+
+model ChartOpenClose {
+  id         String   @id @default(uuid())
+  marketName String
+  resultDate DateTime
+  openPanna  String?
+  openDigit  String?
+  closePanna String?
+  closeDigit String?
+  jodi       String?
+  createdAt  DateTime @default(now())
+
+  @@unique([marketName, resultDate])
+  @@index([marketName, resultDate])
+  @@map("chart_open_close")
+}
+
+// ============================================================
+// STARLINE
+// ============================================================
+
+model StarlineMarket {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  slug      String   @unique
+  openTime  String?
+  closeTime String?
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  @@map("starline_markets")
+}
+
+model StarlineTiming {
+  id        String   @id @default(uuid())
+  marketId  String
+  dayOfWeek Int
+  openTime  String
+  closeTime String
+  active    Boolean  @default(true)
+
+  @@index([marketId])
+  @@map("starline_timings")
+}
+
+model StarlineResult {
+  id          String   @id @default(uuid())
+  marketName  String
+  resultDate  DateTime
+  openPanna   String?
+  openDigit   String?
+  closePanna  String?
+  closeDigit  String?
+  jodi        String?
+  declaredAt  DateTime @default(now())
+
+  @@unique([marketName, resultDate])
+  @@index([marketName, resultDate])
+  @@map("starline_results")
+}
+
+// ============================================================
+// CMS & CONTENT
+// ============================================================
+
+model Content {
+  id        String   @id @default(uuid())
+  slug      String   @unique
+  title     String
+  body      String
+  active    Boolean  @default(true)
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+
+  @@map("contents")
+}
+
+model Idea {
+  id        String   @id @default(uuid())
+  userId    String
+  subject   String
+  message   String
+  status    String   @default("new")
+  adminNote String?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([status])
+  @@map("ideas")
+}
+
+// ============================================================
+// MEDIA / SLIDERS
+// ============================================================
+
+model ImageSlider {
+  id        String   @id @default(uuid())
+  title     String?
+  imageUrl  String
+  linkUrl   String?
+  sortOrder Int      @default(0)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  @@map("image_sliders")
+}
+
+model ImageSliderWebsite {
+  id        String   @id @default(uuid())
+  title     String?
+  imageUrl  String
+  linkUrl   String?
+  sortOrder Int      @default(0)
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  @@map("image_sliders_website")
+}
+
+// ============================================================
+// CHAT / SUPPORT
+// ============================================================
+
+model Conversation {
+  id           String    @id @default(uuid())
+  userId       String
+  subject      String?
+  status       String    @default("open")
+  lastMessage  String?
+  lastMsgAt    DateTime?
+  unreadAdmin  Int       @default(0)
+  unreadUser   Int       @default(0)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([userId])
+  @@index([status])
+  @@map("conversations")
+}
+
+model AdminChat {
+  id        String   @id @default(uuid())
+  fromAdmin String
+  toAdmin   String
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([fromAdmin, toAdmin, createdAt])
+  @@map("admin_chats")
+}
+
+// ============================================================
+// NOTIFICATIONS
+// ============================================================
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String?
+  title     String
+  body      String
+  type      String   @default("general")
+  readAt    DateTime?
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([createdAt])
+  @@map("notifications")
+}
+
+// ============================================================
+// NOTIFICATIONS (FCM)
+// ============================================================
+
+model DeviceToken {
+  id        String   @id @default(uuid())
+  userId    String?
+  token     String   @unique
+  platform  String   @default("android")
+  topics    String?
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([platform])
+  @@map("device_tokens")
+}
+
+model NotificationTopic {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  displayName String
+  description String?
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  @@map("notification_topics")
+}
+
+// ============================================================
+// ADMIN OTP (Email-based)
+// ============================================================
+
+model AdminOtp {
+  id        String   @id @default(uuid())
+  email     String
+  otpHash   String
+  type      String   @default("login")
+  used      Boolean  @default(false)
+  attempts  Int      @default(0)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([email, type])
+  @@map("admin_otps")
+}
+
+model AdminSession {
+  id           String   @id @default(uuid())
+  adminId      String
+  refreshToken String   @unique
+  userAgent    String?
+  ipAddress    String?
+  active       Boolean  @default(true)
+  expiresAt    DateTime
+  lastActiveAt DateTime @default(now())
+  createdAt    DateTime @default(now())
+
+  admin Admin @relation(fields: [adminId], references: [id], onDelete: Cascade)
+
+  @@index([adminId])
+  @@index([refreshToken])
+  @@map("admin_sessions")
+}
+
+model AdminResetToken {
+  id        String   @id @default(uuid())
+  adminId   String
+  email     String
+  tokenHash String   @unique
+  used      Boolean  @default(false)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([email])
+  @@map("admin_reset_tokens")
+}

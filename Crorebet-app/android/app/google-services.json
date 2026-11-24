@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "224146243907",
+    "project_id": "crorebet-5d446",
+    "storage_bucket": "crorebet-5d446.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:224146243907:android:d390f1fca2733b4e88eff6",
+        "android_client_info": {
+          "package_name": "com.crorebet.play"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcYLftvZLGZazDB-8ueEkqWO0r5WYg-H4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

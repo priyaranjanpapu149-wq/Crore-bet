@@ -362,10 +362,10 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
       {/* Header */}
       <div className="p-4 border-b border-brand-border flex items-center gap-2.5 flex-shrink-0">
         <div className="w-9 h-9 rounded-full bg-brand-accent flex items-center justify-center flex-shrink-0">
-          <span className="text-brand-bg font-bold text-lg">M</span>
+          <span className="text-brand-bg font-bold text-lg">C</span>
         </div>
         <div className="leading-tight">
-          <h1 className="text-base font-bold text-brand-accent">Magicboss</h1>
+          <h1 className="text-base font-bold text-brand-accent">Crorebet</h1>
           <p className="text-[10px] text-slate-500 tracking-widest uppercase">
             Admin Panel
           </p>

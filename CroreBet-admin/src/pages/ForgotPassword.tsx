@@ -119,7 +119,7 @@ export default function ForgotPassword() {
           <div className="w-14 h-14 mx-auto rounded-full bg-brand-accent flex items-center justify-center mb-3">
             <span className="text-brand-bg font-bold text-2xl">M</span>
           </div>
-          <h1 className="text-xl font-bold text-brand-accent">Magicboss Admin</h1>
+          <h1 className="text-xl font-bold text-brand-accent">Crorebet Admin</h1>
           <p className="text-xs text-slate-400 mt-1">
             {step === 'email' && 'Forgot Password?'}
             {step === 'otp' && 'Verify Password Reset OTP'}

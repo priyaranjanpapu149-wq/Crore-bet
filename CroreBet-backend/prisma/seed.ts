@@ -63,9 +63,9 @@ async function main() {
   // SETTINGS
   // ═══════════════════════════════════════════════════════
   const settings = [
-    { key: 'site_name',        value: 'Shivaay' },
+    { key: 'site_name',        value: 'Crorebet' },
     { key: 'tagline',          value: 'Play Big. Win Big.' },
-    { key: 'app_download_url', value: '/apk/shivaay.apk' },
+    { key: 'app_download_url', value: '/apk/Crorebet.apk' },
     { key: 'whatsapp_number',  value: '' },
     { key: 'telegram_link',    value: '' },
     { key: 'telegram_label',   value: 'Telegram Channel' },
@@ -120,7 +120,7 @@ async function main() {
   if (noticeCount === 0) {
     await prisma.notice.create({
       data: {
-        title: 'Welcome to Shivaay',
+        title: 'Welcome to Crorebet',
         content: 'Play smart. Win big. Start bidding today!',
         active: true,
       },

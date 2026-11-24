@@ -334,9 +334,9 @@ router.get('/home', async (req, res) => {
       sliders,
       rates: rates,
       settings: {
-        siteName: settingsMap.site_name || 'Shivaay',
+        siteName: settingsMap.site_name || 'Crorebet',
         tagline: settingsMap.site_tagline || 'Play Big. Win Big.',
-        appDownloadUrl: settingsMap.app_download_url || '/apk/shivaay.apk',
+        appDownloadUrl: settingsMap.app_download_url || '/apk/Crorebet.apk',
         whatsappNumber: normalizeWhatsapp(whatsappRaw),
         telegramLink:   normalizeTelegram(telegramRaw),
         telegramLabel:  settingsMap.telegramLabel || 'Telegram Channel',

@@ -168,7 +168,7 @@ export default function OcCutting() {
     doc.setTextColor(212, 175, 55);
     doc.setFontSize(16);
     doc.setFont('helvetica', 'bold');
-    doc.text('Magicboss', 14, 12);
+    doc.text('Crorebet', 14, 12);
 
     doc.setTextColor(0, 0, 0);
     doc.setFontSize(9);

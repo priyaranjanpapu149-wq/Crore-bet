@@ -335,7 +335,7 @@ export default function SliderPage() {
  <input
  type="text"
  className="input"
- placeholder="https://magicbossapp.com/charts"
+ placeholder="https://Crorebetapp.com/charts"
  value={form.linkUrl}
  onChange={(e) => setForm({ ...form, linkUrl: e.target.value })}
  />

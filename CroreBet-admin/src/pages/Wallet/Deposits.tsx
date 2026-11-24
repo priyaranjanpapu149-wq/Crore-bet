@@ -171,7 +171,7 @@ export default function Deposits() {
       doc.setTextColor(212, 175, 55); // gold
       doc.setFontSize(20);
       doc.setFont('helvetica', 'bold');
-      doc.text('Magicboss', 14, 12);
+      doc.text('Crorebet', 14, 12);
 
       doc.setFontSize(10);
       doc.setTextColor(255, 255, 255);
@@ -261,7 +261,7 @@ export default function Deposits() {
             { align: 'right' }
           );
           doc.text(
-            'Magicboss Admin — Confidential',
+            'Crorebet Admin — Confidential',
             14,
             210 - 5
           );

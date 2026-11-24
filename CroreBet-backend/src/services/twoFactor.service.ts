@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 import { encrypt, decrypt } from '../utils/crypto';
 
-const ISSUER = 'Shivaay Admin';
+const ISSUER = 'Crorebet Admin';
 
 // otplib defaults: 30s step, 6 digits, SHA1 — matches Google Authenticator.
 // window: 1 = accept the code from the step before and after the current

@@ -136,7 +136,7 @@ export default function Home() {
                {/* Download buttons */}
             <div className="flex flex-wrap gap-3 items-center">
               <a
-                href="https://magicbossapp.com/apk/magicbossapp.apk"
+                href="https://crorebetapp.com/apk/crorebetapp.apk"
                 download
                 className="group relative transition-transform hover:scale-105 active:scale-95"
               >
@@ -149,7 +149,7 @@ export default function Home() {
               </a>
 
               <a
-                href="https://web.magicbossapp.com/"
+                href="https://web.crorebetapp.com/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group relative transition-transform hover:scale-105 active:scale-95"

@@ -160,7 +160,7 @@ export default function BidHistory() {
     doc.setTextColor(212, 175, 55);
     doc.setFontSize(18);
     doc.setFont('helvetica', 'bold');
-    doc.text('Magicboss', 14, 12);
+    doc.text('Crorebet', 14, 12);
     doc.setFontSize(10);
     doc.setTextColor(255, 255, 255);
     doc.setFont('helvetica', 'normal');
@@ -224,7 +224,7 @@ export default function BidHistory() {
         tr:nth-child(even) { background: #faf5eb; }
         tfoot td { background: #f5f5f5; font-weight: bold; }
       </style></head><body>
-        <h1>Magicboss</h1>
+        <h1>Crorebet</h1>
         <h2>Bid History · Date: ${date} · Game: ${market || 'all'} · Type: ${prettyGame(gameType)} · Records: ${rows.length}</h2>
         <table>
           <thead><tr>

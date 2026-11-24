@@ -268,7 +268,7 @@ export default function WinnerPrediction() {
     doc.setTextColor(212, 175, 55);
     doc.setFontSize(18);
     doc.setFont('helvetica', 'bold');
-    doc.text('Magicboss', 14, 12);
+    doc.text('Crorebet', 14, 12);
     doc.setFontSize(10);
     doc.setTextColor(255, 255, 255);
     doc.setFont('helvetica', 'normal');

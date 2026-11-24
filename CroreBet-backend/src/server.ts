@@ -20,10 +20,10 @@ app.set('trust proxy', 1);
 app.use(helmet());
 const allowedOrigins = process.env.NODE_ENV === 'production'
   ? [
-      'https://shivaay.cc',
-      'https://www.shivaay.cc',
-      'https://web.shivaay.cc',
-      'https://admin.shivaay.cc',
+      'https://Crorebet.cc',
+      'https://www.Crorebet.cc',
+      'https://web.Crorebet.cc',
+      'https://admin.Crorebet.cc',
     ]
   : true;
 
@@ -46,7 +46,7 @@ app.get('/health', async (req, res) => {
     await prisma.$queryRaw`SELECT 1`;
     res.json({
       status: 'ok',
-      service: 'shivaay-api',
+      service: 'crorebet',
       database: 'connected',
       time: new Date().toISOString(),
     });
@@ -90,7 +90,7 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 });
 
 app.listen(Number(PORT), '0.0.0.0', () => {
-  console.log(`\n🚀 Shivaay API on http://0.0.0.0:${PORT}\n`);
+  console.log(`\n🚀 Crorebet API on http://0.0.0.0:${PORT}\n`);
   startScheduler();
 });
 

@@ -372,7 +372,7 @@ export default function MainSettings() {
             label="Homescreen Text"
             value={form.tet}
             onChange={(v) => set('tet', v)}
-            placeholder="Welcome to MagicBoss"
+            placeholder="Welcome to Crorebet"
           />
           <Field
             label="Welcome Message"

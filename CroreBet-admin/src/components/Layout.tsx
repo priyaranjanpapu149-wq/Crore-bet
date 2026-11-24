@@ -88,9 +88,9 @@ export default function Layout() {
             {!sidebarOpen && (
               <div className="flex items-center gap-2 ml-1">
                 <div className="w-7 h-7 rounded-full bg-brand-accent flex items-center justify-center flex-shrink-0">
-                  <span className="text-brand-bg font-bold text-sm">M</span>
+                  <span className="text-brand-bg font-bold text-sm">C</span>
                 </div>
-                <span className="font-bold text-brand-accent hidden sm:inline">Magicboss</span>
+                <span className="font-bold text-brand-accent hidden sm:inline">Crorebet</span>
               </div>
             )}
 

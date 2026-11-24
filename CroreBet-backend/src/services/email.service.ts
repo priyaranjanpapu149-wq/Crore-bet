@@ -33,7 +33,7 @@ function otpTemplate(title: string, subtitle: string, otp: string) {
   return `
     <div style="font-family:Arial,sans-serif;max-width:500px;margin:0 auto;">
       <div style="background:linear-gradient(135deg,#0a0a1a,#1a0a2e);padding:30px;text-align:center;border-radius:12px 12px 0 0;">
-        <h1 style="color:#d4af37;margin:0;font-size:28px;">Shivaay</h1>
+        <h1 style="color:#d4af37;margin:0;font-size:28px;">Crorebet</h1>
         <p style="color:#9ca3af;margin:8px 0 0;font-size:12px;letter-spacing:2px;">ADMIN PANEL</p>
       </div>
       <div style="background:#13132b;padding:30px;border-radius:0 0 12px 12px;">
@@ -53,7 +53,7 @@ function otpTemplate(title: string, subtitle: string, otp: string) {
 export async function sendResetOtpEmail(to: string, otp: string) {
   return sendEmail(
     to,
-    'Shivaay Admin - Password Reset',
+    'Crorebet Admin - Password Reset',
     otpTemplate('Password Reset', 'Use this OTP to reset your password:', otp)
   );
 }
@@ -66,7 +66,7 @@ export async function sendResetConfirmationEmail(
   const html = `
     <div style="font-family:Arial,sans-serif;max-width:500px;margin:0 auto;">
       <div style="background:linear-gradient(135deg,#0a0a1a,#1a0a2e);padding:30px;text-align:center;border-radius:12px 12px 0 0;">
-        <h1 style="color:#d4af37;margin:0;font-size:28px;">Shivaay</h1>
+        <h1 style="color:#d4af37;margin:0;font-size:28px;">Crorebet</h1>
         <p style="color:#9ca3af;margin:8px 0 0;font-size:12px;letter-spacing:2px;">ADMIN PANEL</p>
       </div>
       <div style="background:#13132b;padding:30px;border-radius:0 0 12px 12px;">
@@ -81,7 +81,7 @@ export async function sendResetConfirmationEmail(
         <p style="color:#f87171;font-size:13px;">If you did not make this change, contact the system administrator immediately.</p>
         <hr style="border:none;border-top:1px solid #2a2a4a;margin:20px 0;" />
         <p style="color:#6b7280;font-size:11px;">Never share your password or OTP with anyone.</p>
-        <p style="color:#6b7280;font-size:11px;">Shivaay Admin Security Team</p>
+        <p style="color:#6b7280;font-size:11px;">Crorebet Admin Security Team</p>
       </div>
     </div>
   `;

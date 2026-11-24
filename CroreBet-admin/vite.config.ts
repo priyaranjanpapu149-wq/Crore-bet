@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     port: 5173,
-    allowedHosts: ['magicbossapp.com', 'www.magicbossapp.com', 'admin.magicbossapp.com', '.magicbossapp.com'],
+    allowedHosts: ['crorebetapp.com', 'www.crorebetapp.com', 'admin.crorebetapp.com', '.crorebetapp.com'],
     proxy: { '/api': { target: 'http://localhost:5000', changeOrigin: true } },
   },
   build: { outDir: 'dist', sourcemap: false },

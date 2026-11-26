@@ -71,7 +71,7 @@ class _QuickLoginScreenState extends State<QuickLoginScreen> {
   void _snack(String msg) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(msg),
-      backgroundColor: const Color(0xFF25456F),
+      backgroundColor: const Color(0xFF146043),
       behavior: SnackBarBehavior.floating,
     ));
   }
@@ -94,7 +94,7 @@ class _QuickLoginScreenState extends State<QuickLoginScreen> {
                     height: 130,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: const Color(0xFF25456F),
+                      color: const Color(0xFF146043),
                       border: FlameBorder(width: 2),
                       boxShadow: [
                         BoxShadow(
@@ -107,7 +107,7 @@ class _QuickLoginScreenState extends State<QuickLoginScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(18),
                       child: Image.asset(
-                        'assets/images/MagicBoss.webp',
+                        'assets/images/crore_bet_wordmark.png',
                         fit: BoxFit.contain,
                       ),
                     ),
@@ -139,7 +139,7 @@ class _QuickLoginScreenState extends State<QuickLoginScreen> {
                     'Session expired — enter password to continue',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.lato(
-                      color: const Color(0xFFE9F1FF),
+                      color: const Color(0xFFFFF8EB),
                       fontSize: 12.5,
                     ),
                   ),
@@ -169,7 +169,7 @@ class _QuickLoginScreenState extends State<QuickLoginScreen> {
                           decoration: InputDecoration(
                             hintText: 'Enter password',
                             hintStyle: GoogleFonts.lato(
-                              color: const Color(0xFFB6C9E2),
+                              color: const Color(0xFFE5D6B7),
                               fontSize: 14,
                             ),
                             border: InputBorder.none,
@@ -228,7 +228,7 @@ class _QuickLoginScreenState extends State<QuickLoginScreen> {
                   child: OutlinedButton(
                     onPressed: _busy ? null : _submit,
                     style: OutlinedButton.styleFrom(
-                      backgroundColor: const Color(0xFF25456F),
+                      backgroundColor: const Color(0xFF146043),
                       side: const BorderSide(
                           color: AppColors.flameBorder, width: 1.6),
                       shape: RoundedRectangleBorder(
@@ -272,7 +272,7 @@ class _QuickLoginScreenState extends State<QuickLoginScreen> {
           child: Text(
             label,
             style: GoogleFonts.lato(
-              color: const Color(0xFFD4E3F8),
+              color: const Color(0xFFF3E7D0),
               fontSize: 11.5,
               fontWeight: FontWeight.w700,
               letterSpacing: 1.2,
@@ -284,7 +284,7 @@ class _QuickLoginScreenState extends State<QuickLoginScreen> {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             gradient: const LinearGradient(
-              colors: [Color(0xFF1C3459), Color(0xFF1C3459)],
+              colors: [Color(0xFF0A4A35), Color(0xFF0A4A35)],
             ),
             border: FlameBorder(width: 1.3),
           ),

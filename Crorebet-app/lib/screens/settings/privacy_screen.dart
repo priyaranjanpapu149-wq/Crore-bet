@@ -55,7 +55,7 @@ class PrivacyScreen extends StatelessWidget {
                     child: Text(
                       'last_updated_september_2026'.tr(),
                       style: GoogleFonts.lato(
-                        color: const Color(0xFFB6C9E2),
+                        color: const Color(0xFFE5D6B7),
                         fontSize: 11,
                         fontStyle: FontStyle.italic,
                       ),
@@ -89,7 +89,7 @@ class PrivacyScreen extends StatelessWidget {
           Text(
             body,
             style: GoogleFonts.lato(
-              color: const Color(0xFFE9F1FF),
+              color: const Color(0xFFFFF8EB),
               fontSize: 13.5,
               height: 1.6,
               fontWeight: FontWeight.w500,

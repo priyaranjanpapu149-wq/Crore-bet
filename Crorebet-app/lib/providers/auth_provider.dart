@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import '../services/api_service.dart';
 import '../services/secure_storage.dart';
+import '../services/fcm_service.dart';
 
 class AuthProvider with ChangeNotifier {
   static AuthProvider? current;
@@ -46,6 +48,8 @@ class AuthProvider with ChangeNotifier {
     }
     if (mobile.isNotEmpty) await SecureStorage.saveMobile(mobile);
     _isLoggedIn = true;
+    FcmService.reset();
+    unawaited(FcmService.init());
   }
 
   // ═══════════════════════════════════════════════════════════
@@ -129,11 +133,37 @@ class AuthProvider with ChangeNotifier {
     return loginWithPassword(mobile, password, remember: remember);
   }
 
+  Future<bool> register({required String name, required String mobile, required String password, String? referCode}) async {
+    _setLoading(true);
+    _setError(null);
+    try {
+      final res = await _api.signupDirect(name: name, mobile: mobile, password: password, referCode: referCode);
+      if (res['success'] != true) {
+        _setError(res['message']?.toString() ?? 'Registration failed');
+        return false;
+      }
+      await _persistSession(
+        token: res['data']?['accessToken'],
+        refreshToken: res['data']?['refreshToken'],
+        user: res['data']?['user'],
+        mobile: mobile,
+      );
+      await SecureStorage.saveLastMobile(mobile);
+      ApiService.resetSessionFlag();
+      return true;
+    } catch (e) {
+      _setError(_parseError(e));
+      return false;
+    } finally {
+      _setLoading(false);
+    }
+  }
+
   Future<bool> loginWithPassword(String mobile, String password, {bool remember = true}) async {
     _setLoading(true);
     _setError(null);
     try {
-      final res = await _api.loginVerifyPassword(mobile, password);
+      final res = await _api.quickLoginPassword(mobile, password);
       if (res['success'] == true) {
         await _persistSession(
           token: res['data']?['accessToken'],
@@ -209,26 +239,19 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
-  Future<String?> forgotSendOtp(String mobile) async {
+  Future<bool> forgotSendOtp(String mobile) async {
     _setLoading(true);
     _setError(null);
     try {
       final res = await _api.forgotSendOtp(mobile);
       _setLoading(false);
-      if (res['success'] == true) {
-        final otp = res['data']?['otp']?.toString();
-        if (otp == null || otp.isEmpty) {
-          _setError('No account found with this number. Please sign up instead.');
-          return null;
-        }
-        return otp;
-      }
+      if (res['success'] == true) return true;
       _setError(res['message']?.toString() ?? 'Could not send OTP');
-      return null;
+      return false;
     } catch (e) {
       _setError(_parseError(e));
       _setLoading(false);
-      return null;
+      return false;
     }
   }
 
@@ -319,6 +342,7 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> logout() async {
+    await FcmService.unregister();
     await _api.logout();
     _user = null;
     _isLoggedIn = false;

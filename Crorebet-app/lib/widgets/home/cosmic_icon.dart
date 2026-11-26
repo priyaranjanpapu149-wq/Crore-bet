@@ -102,7 +102,7 @@ class _CosmicPainter extends CustomPainter {
     }
     // core
     canvas.drawCircle(head, 6.5, Paint()..color = Colors.white);
-    canvas.drawCircle(head, 4, Paint()..color = const Color(0xFF25456F));
+    canvas.drawCircle(head, 4, Paint()..color = const Color(0xFF146043));
   }
 
   void _spiralGalaxy(Canvas canvas, Size size, Random rnd) {

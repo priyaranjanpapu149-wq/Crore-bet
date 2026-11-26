@@ -1,4 +1,5 @@
-import admin from 'firebase-admin';
+import { cert, getApps, initializeApp } from 'firebase-admin/app';
+import { getMessaging, type Message, type MulticastMessage } from 'firebase-admin/messaging';
 import prisma from '../config/db';
 import fs from 'fs';
 import path from 'path';
@@ -49,7 +50,7 @@ function initFirebase() {
   }
 
   try {
-    admin.initializeApp({ credential: admin.credential.cert(creds) });
+    if (!getApps().length) initializeApp({ credential: cert(creds) });
     initialized = true;
     console.log(`✅ Firebase Admin initialized (project: ${creds.project_id})`);
   } catch (e: any) {
@@ -68,12 +69,12 @@ export function isFcmReady() {
 // ═══════════════════════════════════════════════════════════
 export async function subscribeTokenToTopic(token: string, topic: string) {
   if (!initialized) throw new Error('FCM not initialized');
-  await admin.messaging().subscribeToTopic([token], topic);
+  await getMessaging().subscribeToTopic([token], topic);
 }
 
 export async function unsubscribeTokenFromTopic(token: string, topic: string) {
   if (!initialized) throw new Error('FCM not initialized');
-  await admin.messaging().unsubscribeFromTopic([token], topic);
+  await getMessaging().unsubscribeFromTopic([token], topic);
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -87,7 +88,7 @@ export async function sendToTopic(
 ) {
   if (!initialized) throw new Error('FCM not initialized');
 
-  const message: admin.messaging.Message = {
+  const message: Message = {
     topic,
     data: { ...data, title, body },          // ← ONLY data, no notification block
     android: {
@@ -106,7 +107,7 @@ export async function sendToTopic(
     },
   };
 
-  return admin.messaging().send(message);
+  return getMessaging().send(message);
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -120,7 +121,7 @@ export async function sendToToken(
 ) {
   if (!initialized) throw new Error('FCM not initialized');
 
-  const message: admin.messaging.Message = {
+  const message: Message = {
     token,
     data: { ...data, title, body },          // ← data-only
     android: {
@@ -139,7 +140,7 @@ export async function sendToToken(
     },
   };
 
-  return admin.messaging().send(message);
+  return getMessaging().send(message);
 }
 
 // ═══════════════════════════════════════════════════════════
@@ -163,7 +164,7 @@ export async function sendToUser(
     return { successCount: 0, failureCount: 0 };
   }
 
-  const message: admin.messaging.MulticastMessage = {
+  const message: MulticastMessage = {
     tokens: tokens.map((t) => t.token),
     data: { ...data, title, body },          // ← data-only
     android: {
@@ -182,7 +183,7 @@ export async function sendToUser(
     },
   };
 
-  const result = await admin.messaging().sendEachForMulticast(message);
+  const result = await getMessaging().sendEachForMulticast(message);
 
   if (result.failureCount > 0) {
     const dead: string[] = [];

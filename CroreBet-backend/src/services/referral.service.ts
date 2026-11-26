@@ -199,7 +199,7 @@ export async function payCashback(referralId: string, amount?: number) {
   const referrer = await prisma.user.findUnique({ where: { mobile: ref.referrerMobile } });
   if (!referrer) throw new Error('Referrer not found');
 
-  const { updateWallet } = await import('./wallet.service');
+  const { updateWallet } = await import('./wallet.service.js');
   await updateWallet({
     userId: referrer.id,
     amount: amt,

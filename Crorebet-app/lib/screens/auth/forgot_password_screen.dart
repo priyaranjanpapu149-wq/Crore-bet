@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../config/colors.dart';
+import '../../widgets/auth_shell.dart';
 import '../../providers/auth_provider.dart';
 import '../../widgets/cosmic_background.dart';
 import '../../widgets/ornamental_frame.dart';
@@ -33,18 +34,16 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     final auth = context.read<AuthProvider>();
     final mobile = _mobileCtrl.text.trim();
 
-    // 🚀 In-app OTP: backend returns OTP directly
-    final otp = await auth.forgotSendOtp(mobile);
+    final sent = await auth.forgotSendOtp(mobile);
     if (!mounted) return;
 
-    if (otp != null && otp.isNotEmpty) {
+    if (sent) {
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (_) => OtpScreen(
             mobile: mobile,
             mode: OtpMode.forgot,
-            prefilledOtp: otp,
           ),
         ),
       );
@@ -59,128 +58,15 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     final auth = context.watch<AuthProvider>();
-    final w = MediaQuery.of(context).size.width;
-    final h = MediaQuery.of(context).size.height;
-    final horizontalPadding = w < 360 ? 18.0 : (w < 400 ? 24.0 : 28.0);
-    final iconPadding = w < 360 ? 18.0 : 24.0;
-    final iconSize = w < 360 ? 42.0 : 50.0;
-
-    return Scaffold(
-      body: CosmicBackground(
-        child: OrnamentalFrame(
-          child: SafeArea(
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                return SingleChildScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                    child: IntrinsicHeight(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: horizontalPadding,
-                          vertical: 16,
-                        ),
-                        child: Form(
-                          key: _formKey,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              SizedBox(height: h < 700 ? 4 : 12),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: IconButton(
-                                  icon: const Icon(
-                                    Icons.arrow_back_ios_new_rounded,
-                                    color: Color(0xFFF5F8FF),
-                                    size: 20,
-                                  ),
-                                  onPressed: () => Navigator.pop(context),
-                                  padding: EdgeInsets.zero,
-                                  constraints: const BoxConstraints(),
-                                ),
-                              ),
-                              SizedBox(height: h < 700 ? 16 : 30),
-                              Center(
-                                child: Container(
-                                  padding: EdgeInsets.all(iconPadding),
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: FlameBorder(width: 2),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: AppColors.gold.withValues(alpha: 0.4),
-                                        blurRadius: 30,
-                                        spreadRadius: 4,
-                                      ),
-                                    ],
-                                  ),
-                                  child: Icon(
-                                    Icons.lock_reset_rounded,
-                                    size: iconSize,
-                                    color: const Color(0xFFF5F8FF),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: h < 700 ? 20 : 30),
-                              GoldDivider(
-                                text: 'forgot_password'.tr(),
-                                fontSize: w < 360 ? 13 : 17,
-                              ),
-                              const SizedBox(height: 12),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 10),
-                                child: Text(
-                                  'forgot_password_instructions'.tr(),
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.lato(
-                                    color: const Color(0xFFE9F1FF),
-                                    fontSize: w < 360 ? 11.5 : 12.5,
-                                    height: 1.55,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                              SizedBox(height: h < 700 ? 24 : 40),
-                              CosmicTextField(
-                                controller: _mobileCtrl,
-                                hint: 'mobile_number'.tr(),
-                                icon: Icons.phone_android_rounded,
-                                keyboardType: TextInputType.phone,
-                                maxLength: 10,
-                                validator: (v) {
-                                  if (v == null || v.trim().isEmpty) {
-                                    return 'mobile_required'.tr();
-                                  }
-                                  if (v.trim().length != 10) {
-                                    return 'enter_10digit_mobile'.tr();
-                                  }
-                                  if (int.tryParse(v.trim()) == null) {
-                                    return 'digits_only'.tr();
-                                  }
-                                  return null;
-                                },
-                              ),
-                              SizedBox(height: h < 700 ? 20 : 30),
-                              GoldButton(
-                                label: 'send_otp'.tr(),
-                                loading: auth.loading,
-                                onPressed: _submit,
-                              ),
-                              const Spacer(),
-                              const SizedBox(height: 20),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        ),
-      ),
+    return AuthShell(title: 'forgot_password'.tr(), subtitle: 'forgot_password_instructions'.tr(), showBack: true,
+      child: Form(key: _formKey, child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        CosmicTextField(controller: _mobileCtrl, hint: 'mobile_number'.tr(), icon: Icons.phone_android, keyboardType: TextInputType.phone, maxLength: 10,
+          validator: (v) => v == null || v.trim().length != 10 ? 'enter_10digit_mobile'.tr() : null),
+        const SizedBox(height: 22),
+        GoldButton(label: 'send_otp'.tr(), loading: auth.loading, onPressed: _submit),
+        const SizedBox(height: 18),
+        TextButton(onPressed: () => Navigator.pop(context), child: Text('login'.tr(), style: const TextStyle(color: Color(0xFF063D30), fontWeight: FontWeight.bold))),
+      ])),
     );
   }
 }

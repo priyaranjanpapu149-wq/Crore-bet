@@ -1,8 +1,19 @@
+import 'package:flutter/foundation.dart' show kReleaseMode;
+
 class ApiConfig {
   // ═══════════════════════════════════════════════════════════
   // BASE URL
   // ═══════════════════════════════════════════════════════
-  static const String baseUrl = 'http://10.20.30.100:5000/';
+  static String get baseUrl {
+    const configured = String.fromEnvironment('API_BASE_URL');
+    if (configured.isNotEmpty) {
+      return configured.endsWith('/') ? configured : '$configured/';
+    }
+    if (kReleaseMode) {
+      throw StateError('Set API_BASE_URL with --dart-define for release builds.');
+    }
+    return 'http://10.20.30.100:5000/';
+  }
 
 
   // ═══════════════════════════════════════════════════════════

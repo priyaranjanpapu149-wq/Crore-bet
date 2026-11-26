@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import '../config/colors.dart';
 
 class GoldButton extends StatelessWidget {
   final String label;
@@ -36,8 +34,8 @@ class GoldButton extends StatelessWidget {
         child: OutlinedButton(
           onPressed: loading ? null : onPressed,
           style: OutlinedButton.styleFrom(
-            backgroundColor: const Color(0xFF1C3459),
-            side: const BorderSide(color: const Color(0xFFF5F8FF), width: 1.5),
+            backgroundColor: const Color(0xFF0A4A35),
+            side: const BorderSide(color: Color(0xFFD6AA41), width: 1.5),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(14),
             ),
@@ -53,11 +51,12 @@ class GoldButton extends StatelessWidget {
           )
               : Text(
             label,
-            style: GoogleFonts.cinzel(
+            style: TextStyle(
+              fontFamily: 'serif',
               fontSize: fontSize,
               fontWeight: FontWeight.bold,
               color: const Color(0xFFF5F8FF),
-              letterSpacing: 4,
+              letterSpacing: 0.5,
             ),
           ),
         ),

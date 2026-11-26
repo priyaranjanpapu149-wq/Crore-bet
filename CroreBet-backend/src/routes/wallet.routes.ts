@@ -47,15 +47,11 @@ router.post('/withdraw-request', async (req, res) => {
     });
     if (!bank) return badRequest(res, 'Add bank/UPI details first');
 
-    const pending = await prisma.withdrawal.findFirst({
-      where: { userId: req.user!.sub, status: 'pending' },
-    });
-    if (pending) {
-      return badRequest(res, 'You already have a pending withdrawal request');
-    }
-
     // 🔒 Single transaction — all or nothing
     const wd = await prisma.$transaction(async (tx) => {
+      await tx.$queryRaw`SELECT id FROM users WHERE id = ${req.user!.sub} FOR UPDATE`;
+      const pending = await tx.withdrawal.findFirst({ where: { userId: req.user!.sub, status: 'pending' } });
+      if (pending) throw new Error('You already have a pending withdrawal request');
       const user = await tx.user.findUnique({
         where: { id: req.user!.sub },
       });
@@ -215,8 +211,11 @@ router.post('/transfer', async (req, res) => {
     if (!target.active) return badRequest(res, 'Recipient account is not active');
 
     await prisma.$transaction(async (tx) => {
+      await tx.$queryRaw`SELECT id FROM users WHERE id IN (${req.user!.sub}, ${target.id}) ORDER BY id FOR UPDATE`;
       const sender = await tx.user.findUnique({ where: { id: req.user!.sub } });
-      if (!sender || Number(sender.wallet) < amt) {
+      const recipient = await tx.user.findUnique({ where: { id: target.id } });
+      if (!recipient || !recipient.active) throw new Error('Recipient account is not active');
+      if (!sender || !sender.active || Number(sender.wallet) < amt) {
         throw new Error('Insufficient balance');
       }
 
@@ -237,7 +236,7 @@ router.post('/transfer', async (req, res) => {
         },
       });
 
-      const tBefore = Number(target.wallet);
+      const tBefore = Number(recipient.wallet);
       const tAfter = tBefore + amt;
       await tx.user.update({
         where: { id: target.id },

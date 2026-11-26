@@ -4,7 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   testWidgets('app assets are bundled', (tester) async {
     for (final path in [
-      'assets/images/MagicBoss.webp',
+      'assets/images/crore_bet_hero.png',
+      'assets/images/crore_bet_wordmark.png',
       'assets/images/cosmic_chart.png',
       'assets/games/single.gif',
       'assets/translations/en.json',

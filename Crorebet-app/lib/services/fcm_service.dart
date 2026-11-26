@@ -6,9 +6,11 @@ import '../services/api_service.dart';
 import '../services/secure_storage.dart';
 import '../providers/auth_provider.dart';
 import 'notification_service.dart';
+import 'notification_channel.dart';
 
 class FcmService {
   static bool _initialized = false;
+  static bool _listenersRegistered = false;
 
   /// Safe to call multiple times — only the first call does work.
   /// Should be invoked AFTER a confirmed login (Home load), never at
@@ -38,9 +40,10 @@ class FcmService {
     try {
       final messaging = FirebaseMessaging.instance;
       debugPrint('[FCM] messaging instance ready');
+      await NotificationChannelSetup.init();
+      await messaging.requestPermission();
 
-      // Do NOT requestPermission here — PermissionsScreen owns that.
-
+      if (!_listenersRegistered) {
       FirebaseMessaging.onMessage.listen((RemoteMessage msg) async {
         // 🚀 CHECK IF NOTIFICATIONS ARE ENABLED
         final prefs = await SharedPreferences.getInstance();
@@ -57,7 +60,7 @@ class FcmService {
         if (n == null && data.isEmpty) return;
 
         AppNotificationService.show(
-          title: n?.title ?? data['title']?.toString() ?? 'Mahalaxmi',
+          title: n?.title ?? data['title']?.toString() ?? 'Crorebet',
           message: n?.body ??
               data['body']?.toString() ??
               data['message']?.toString() ??
@@ -86,6 +89,19 @@ class FcmService {
           debugPrint('[FCM] ⚠️ wallet refresh failed: $e');
         }
       });
+      messaging.onTokenRefresh.listen((t) async {
+        final prefs = await SharedPreferences.getInstance();
+        if (!(prefs.getBool('notifications_enabled') ?? true)) return;
+        final accessToken = await SecureStorage.getToken();
+        if (accessToken == null || accessToken.isEmpty) return;
+        try {
+          await _registerToken(t);
+        } catch (_) {
+          _initialized = false;
+        }
+      });
+      _listenersRegistered = true;
+      }
 
       final initial = await messaging.getInitialMessage();
       if (initial != null) {
@@ -109,6 +125,7 @@ class FcmService {
         if (fcmToken != null && fcmToken.isNotEmpty) {
           await _registerToken(fcmToken);
         } else {
+          _initialized = false;
           debugPrint('[FCM] ❌ getToken returned null');
           debugPrint('[FCM]    Possible causes:');
           debugPrint('[FCM]    1. Emulator lacks Google Play Services');
@@ -119,20 +136,8 @@ class FcmService {
         debugPrint('[FCM] skipped token registration — notifications disabled by user');
       }
 
-      messaging.onTokenRefresh.listen((t) async {
-        // 🚀 CHECK IF NOTIFICATIONS ARE ENABLED ON REFRESH
-        final prefs = await SharedPreferences.getInstance();
-        final notificationsEnabled = prefs.getBool('notifications_enabled') ?? true;
-
-        if (!notificationsEnabled) {
-          debugPrint('[FCM] token refreshed but notifications are DISABLED. Ignoring.');
-          return;
-        }
-
-        debugPrint('[FCM] token refreshed');
-        _registerToken(t);
-      });
     } catch (e, st) {
+      _initialized = false;
       debugPrint('[FCM] init failed: $e');
       debugPrint('[FCM] stack: $st');
     }
@@ -141,9 +146,30 @@ class FcmService {
   static Future<void> _registerToken(String token) async {
     try {
       await ApiService().registerFcmToken(token);
-      debugPrint('[FCM] ✅ token registered: ${token.substring(0, 12)}...');
+      debugPrint('[FCM] token registered');
     } catch (e) {
       debugPrint('[FCM] ❌ token register failed: $e');
+      rethrow;
+    }
+  }
+
+  static Future<void> unregister() async {
+    if (kIsWeb) return;
+    try {
+      final messaging = FirebaseMessaging.instance;
+      final token = await messaging.getToken();
+      if (token != null && token.isNotEmpty) {
+        try {
+          await ApiService().removeFcmToken(token);
+        } catch (e) {
+          debugPrint('[FCM] token removal failed: $e');
+        }
+      }
+      await messaging.deleteToken();
+    } catch (e) {
+      debugPrint('[FCM] unregister failed: $e');
+    } finally {
+      reset();
     }
   }
 
@@ -163,17 +189,21 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   final prefs = await SharedPreferences.getInstance();
   final notificationsEnabled = prefs.getBool('notifications_enabled') ?? true;
 
-  if (!notificationsEnabled) {
-    debugPrint('[FCM] Background message received but notifications are DISABLED. Skipping.');
-    return; // Stop here, do not show background notification
+  await showBackgroundMessage(message, notificationsEnabled: notificationsEnabled);
+}
+
+@visibleForTesting
+Future<void> showBackgroundMessage(RemoteMessage message, {required bool notificationsEnabled}) async {
+  if (!notificationsEnabled) return;
+  if (message.notification == null) {
+    final title = message.data['title']?.toString() ?? 'Crorebet';
+    final body = message.data['body']?.toString() ?? message.data['message']?.toString() ?? '';
+    if (body.isNotEmpty) {
+      await NotificationChannelSetup.show(
+        id: (message.messageId ?? DateTime.now().microsecondsSinceEpoch.toString()).hashCode & 0x7fffffff,
+        title: title,
+        body: body,
+      );
+    }
   }
-
-  debugPrint('[FCM] Background message: ${message.messageId}');
-
-  // Note: If your backend sends a 'notification' payload, the OS will
-  // display it automatically. The true way to stop background notifications
-  // is by deleting the FCM token (which we do in SettingsProvider when toggled OFF).
-
-  // If you have data-only messages and show them manually via flutter_local_notifications:
-  // await AppNotificationService.show(...)
 }

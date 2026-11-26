@@ -115,7 +115,7 @@ class _PassbookScreenState extends State<PassbookScreen> {
     if (_rows.isEmpty) return _empty('no_transactions_yet'.tr());
     return RefreshIndicator(
       color: const Color(0xFFF5F8FF),
-      backgroundColor: const Color(0xFF1C3459),
+      backgroundColor: const Color(0xFF0A4A35),
       onRefresh: _load,
       child: ListView.builder(
         padding: const EdgeInsets.fromLTRB(12, 4, 12, 20),
@@ -131,10 +131,10 @@ class _PassbookScreenState extends State<PassbookScreen> {
       mainAxisSize: MainAxisSize.min,
       children: [
         const Icon(Icons.menu_book_rounded,
-            color: Color(0xFFB6C9E2), size: 60),
+            color: Color(0xFFE5D6B7), size: 60),
         const SizedBox(height: 14),
         FlameText(child: Text(message, style: GoogleFonts.lato(
-          color: const Color(0xFFE9F1FF), fontSize: 14,
+          color: const Color(0xFFFFF8EB), fontSize: 14,
         ))),
       ],
     ));
@@ -157,8 +157,8 @@ class _TxnCard extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            const Color(0xFF1C3459).withValues(alpha: 0.92),
-            const Color(0xFF1C3459).withValues(alpha: 0.94),
+            const Color(0xFF0A4A35).withValues(alpha: 0.92),
+            const Color(0xFF0A4A35).withValues(alpha: 0.94),
           ],
         ),
         border: FlameBorder(width: 1.3),
@@ -175,7 +175,7 @@ class _TxnCard extends StatelessWidget {
             Row(children: [
               Expanded(child: FlameText(child: Text(_fmtDateTime(txn.createdAt),
                 style: GoogleFonts.lato(
-                  color: const Color(0xFFE9F1FF),
+                  color: const Color(0xFFFFF8EB),
                   fontSize: 12.5, fontWeight: FontWeight.w600,
                 ),
               ))),
@@ -219,7 +219,7 @@ class _TxnCard extends StatelessWidget {
             FlameText(child: Text(
               'request_details'.tr(),
               style: GoogleFonts.lato(
-                color: const Color(0xFFD4E3F8),
+                color: const Color(0xFFF3E7D0),
                 fontSize: 11.5, fontWeight: FontWeight.w600, letterSpacing: 0.5,
               ),
             )),
@@ -237,7 +237,7 @@ class _TxnCard extends StatelessWidget {
                   'amount': _fmtNum(txn.balanceAfter!),
                 }),
                 style: GoogleFonts.lato(
-                  color: const Color(0xFFB6C9E2),
+                  color: const Color(0xFFE5D6B7),
                   fontSize: 11, fontWeight: FontWeight.w500,
                 ),
               )),

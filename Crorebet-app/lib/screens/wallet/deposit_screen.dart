@@ -48,7 +48,7 @@ class _DepositScreenState extends State<DepositScreen> {
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(msg),
-      backgroundColor: const Color(0xFF25456F),
+      backgroundColor: const Color(0xFF146043),
       behavior: SnackBarBehavior.floating,
       duration: const Duration(seconds: 2),
     ));
@@ -169,12 +169,12 @@ class _DepositScreenState extends State<DepositScreen> {
         borderRadius: BorderRadius.circular(18),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF5EA8F5).withValues(alpha: 0.22),
+            color: const Color(0xFFD6AA41).withValues(alpha: 0.22),
             blurRadius: 24,
             spreadRadius: 2,
           ),
           BoxShadow(
-            color: const Color(0xFF70B6FF).withValues(alpha: 0.35),
+            color: const Color(0xFFE2BC62).withValues(alpha: 0.35),
             blurRadius: 12,
             spreadRadius: 1,
           ),
@@ -190,9 +190,9 @@ class _DepositScreenState extends State<DepositScreen> {
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      Color(0xFF14284A),
-                      Color(0xFF1C3459),
-                      Color(0xFF284D7E),
+                      Color(0xFF084A35),
+                      Color(0xFF0A4A35),
+                      Color(0xFF176C4B),
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -231,7 +231,7 @@ class _DepositScreenState extends State<DepositScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(18),
                     border: Border.all(
-                      color: const Color(0xFF5EA8F5),
+                      color: const Color(0xFFD6AA41),
                       width: 1.8,
                     ),
                   ),
@@ -342,7 +342,7 @@ class _DepositScreenState extends State<DepositScreen> {
         borderRadius: BorderRadius.circular(14),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF5EA8F5).withValues(alpha: 0.20),
+            color: const Color(0xFFD6AA41).withValues(alpha: 0.20),
             blurRadius: 16,
             spreadRadius: 1,
           ),
@@ -356,7 +356,7 @@ class _DepositScreenState extends State<DepositScreen> {
               child: Container(
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Color(0xFF14284A), Color(0xFF284D7E)],
+                    colors: [Color(0xFF084A35), Color(0xFF176C4B)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -369,7 +369,7 @@ class _DepositScreenState extends State<DepositScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(14),
                     border: Border.all(
-                      color: const Color(0xFF5EA8F5),
+                      color: const Color(0xFFD6AA41),
                       width: 1.5,
                     ),
                   ),
@@ -386,17 +386,17 @@ class _DepositScreenState extends State<DepositScreen> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       gradient: const LinearGradient(
-                        colors: [Color(0xFF14284A), Color(0xFF1C3459)],
+                        colors: [Color(0xFF084A35), Color(0xFF0A4A35)],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
                       border: Border.all(
-                        color: const Color(0xFF5EA8F5),
+                        color: const Color(0xFFD6AA41),
                         width: 1.2,
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: const Color(0xFF70B6FF)
+                          color: const Color(0xFFE2BC62)
                               .withValues(alpha: 0.35),
                           blurRadius: 8,
                         ),
@@ -423,7 +423,7 @@ class _DepositScreenState extends State<DepositScreen> {
                       decoration: InputDecoration(
                         hintText: 'enter_amount'.tr(),
                         hintStyle: GoogleFonts.lato(
-                          color: const Color(0xFFB6C9E2),
+                          color: const Color(0xFFE5D6B7),
                           fontSize: 14,
                           fontWeight: FontWeight.w500,
                         ),
@@ -462,7 +462,7 @@ class _DepositScreenState extends State<DepositScreen> {
               boxShadow: selected
                   ? [
                 BoxShadow(
-                  color: const Color(0xFF70B6FF)
+                  color: const Color(0xFFE2BC62)
                       .withValues(alpha: 0.55),
                   blurRadius: 14,
                   spreadRadius: 1,
@@ -470,7 +470,7 @@ class _DepositScreenState extends State<DepositScreen> {
               ]
                   : [
                 BoxShadow(
-                  color: const Color(0xFF5EA8F5)
+                  color: const Color(0xFFD6AA41)
                       .withValues(alpha: 0.18),
                   blurRadius: 8,
                 ),
@@ -486,16 +486,16 @@ class _DepositScreenState extends State<DepositScreen> {
                         gradient: selected
                             ? const LinearGradient(
                           colors: [
-                            Color(0xFF284D7E),
-                            Color(0xFF5EA8F5),
+                            Color(0xFF176C4B),
+                            Color(0xFFD6AA41),
                           ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         )
                             : const LinearGradient(
                           colors: [
-                            Color(0xFF14284A),
-                            Color(0xFF284D7E),
+                            Color(0xFF084A35),
+                            Color(0xFF176C4B),
                           ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
@@ -509,7 +509,7 @@ class _DepositScreenState extends State<DepositScreen> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
-                            color: const Color(0xFF5EA8F5),
+                            color: const Color(0xFFD6AA41),
                             width: selected ? 1.8 : 1.2,
                           ),
                         ),
@@ -555,12 +555,12 @@ class _DepositScreenState extends State<DepositScreen> {
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF5EA8F5).withValues(alpha: 0.18),
+                color: const Color(0xFFD6AA41).withValues(alpha: 0.18),
                 blurRadius: 20,
                 spreadRadius: 1,
               ),
               BoxShadow(
-                color: const Color(0xFF284D7E).withValues(alpha: 0.25),
+                color: const Color(0xFF176C4B).withValues(alpha: 0.25),
                 blurRadius: 8,
                 offset: const Offset(0, 3),
               ),
@@ -574,7 +574,7 @@ class _DepositScreenState extends State<DepositScreen> {
                   child: Container(
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [Color(0xFF14284A), Color(0xFF284D7E)],
+                        colors: [Color(0xFF084A35), Color(0xFF176C4B)],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
@@ -611,7 +611,7 @@ class _DepositScreenState extends State<DepositScreen> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color: const Color(0xFF5EA8F5),
+                          color: const Color(0xFFD6AA41),
                           width: 1.5,
                         ),
                       ),
@@ -629,7 +629,7 @@ class _DepositScreenState extends State<DepositScreen> {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           gradient: const LinearGradient(
-                            colors: [Color(0xFF14284A), Color(0xFF1C3459)],
+                            colors: [Color(0xFF084A35), Color(0xFF0A4A35)],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                           ),
@@ -670,7 +670,7 @@ class _DepositScreenState extends State<DepositScreen> {
                                   ? 'click_to_send_deposit'.tr()
                                   : 'enter_amount_to_continue'.tr(),
                               style: GoogleFonts.lato(
-                                color: const Color(0xFFE9F1FF),
+                                color: const Color(0xFFFFF8EB),
                                 fontSize: 11.5,
                                 fontWeight: FontWeight.w500,
                               ),

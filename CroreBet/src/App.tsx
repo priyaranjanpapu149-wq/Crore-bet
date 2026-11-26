@@ -7,6 +7,7 @@ import Charts from './pages/Charts';
 import JodiChart from './pages/JodiChart';
 import PanaChart from './pages/PanaChart';
 import Privacy from './pages/Privacy';
+import Register from './pages/Register';
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
             <Route path="/charts/:market/jodi" element={<JodiChart />} />
             <Route path="/charts/:market/pana" element={<PanaChart />} />
             <Route path="/privacy" element={<Privacy />} />
+            <Route path="/register" element={<Register />} />
           </Routes>
         </main>
         <Footer />

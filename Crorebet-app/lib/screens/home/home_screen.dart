@@ -26,6 +26,7 @@ import '../wallet/withdraw_screen.dart';
 import '../wallet/passbook_screen.dart';
 import '../wallet/funds_screen.dart';
 import '../bids/bid_history_screen.dart';
+import '../support/support_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -98,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       barrierDismissible: false,
       builder: (_) => Dialog(
-        backgroundColor: const Color(0xFF1C3459),
+        backgroundColor: const Color(0xFF0A4A35),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
           side: const BorderSide(color: AppColors.flameBorder, width: 1.6),
@@ -140,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: OutlinedButton(
                         onPressed: () => Navigator.pop(context, false),
                         style: OutlinedButton.styleFrom(
-                          backgroundColor: const Color(0xFF25456F),
+                          backgroundColor: const Color(0xFF146043),
                           side: const BorderSide(
                               color: AppColors.flameBorder, width: 1.4),
                           shape: RoundedRectangleBorder(
@@ -166,7 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: OutlinedButton(
                         onPressed: () => Navigator.pop(context, true),
                         style: OutlinedButton.styleFrom(
-                          backgroundColor: const Color(0xFF25456F),
+                          backgroundColor: const Color(0xFF146043),
                           side: const BorderSide(
                               color: AppColors.flameBorder, width: 1.4),
                           shape: RoundedRectangleBorder(
@@ -217,6 +218,7 @@ class _HomeScreenState extends State<HomeScreen> {
           resizeToAvoidBottomInset: false,
           drawer: const AppDrawer(),
           body: Container(
+            color: const Color(0xFFF8EBD1),
             width: double.infinity,
             height: double.infinity,
             child: Stack(
@@ -231,13 +233,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       Expanded(
                         child: RefreshIndicator(
                           color: const Color(0xFFF5F8FF),
-                          backgroundColor: const Color(0xFF25456F),
+                          backgroundColor: const Color(0xFF146043),
                           onRefresh: () =>
                               context.read<MarketProvider>().loadMarkets(),
                           child: SingleChildScrollView(
                             physics: const AlwaysScrollableScrollPhysics(),
                             child: Column(
                               children: [
+                                _heroBanner(),
                                 _quickActions(),
                                 const SizedBox(height: 10),
                                 _contactBar(),
@@ -263,251 +266,70 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // ─── HEADER ─────────────────────────────────────────────
   Widget _header(num wallet) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(6, 8, 10, 10),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          GestureDetector(
-            onTap: () => _scaffoldKey.currentState?.openDrawer(),
-            behavior: HitTestBehavior.opaque,
-            child: Padding(
-              padding: const EdgeInsets.all(4),
-              child: Image.asset(
-                'assets/images/lotus.png',
-                width: 70,
-                height: 70,
-                fit: BoxFit.contain,
-              ),
-            ),
-          ),
-          const SizedBox(width: 4),
-          Expanded(
-            child: GestureDetector(
-              onTap: () => _scaffoldKey.currentState?.openDrawer(),
-              behavior: HitTestBehavior.opaque,
-              child: Align(
-                alignment: Alignment.centerLeft,
-                // 🚀 STYLISH GOLD GRADIENT TEXT 🚀
-                child: ShaderMask(
-                  shaderCallback: (bounds) => const LinearGradient(
-                    colors: [
-                      Color(0xFF78B9FF), // Bright Gold
-                      Color(0xFFB8860B), // Darker Gold
-                      Color(0xFF78B9FF), // Bright Gold
-                    ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ).createShader(bounds),
-                  child: Text(
-                    'app_name'.tr(),
-                    style: GoogleFonts.cinzel(
-                      color: Colors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 3,
-                      shadows: [
-                        Shadow(
-                          color: Colors.black.withValues(alpha: 0.5),
-                          blurRadius: 4,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          // 🚀 WALLET PILL — AMBER GLOW ONLY (NO BLACK SHADOW)
-          GestureDetector(
-            onTap: _openDeposit,
-            behavior: HitTestBehavior.opaque,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(24),
-                gradient: const LinearGradient(
-                  colors: [Color(0xFF14284A), Color(0xFF284D7E)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                border: Border.all(color: const Color(0xFF5EA8F5), width: 1.6),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0xFF70B6FF).withValues(alpha: 0.45),
-                    blurRadius: 14,
-                    spreadRadius: 1,
-                  ),
-                  BoxShadow(
-                    color: const Color(0xFF284D7E).withValues(alpha: 0.30),
-                    blurRadius: 5,
-                    offset: const Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  const Icon(Icons.account_balance_wallet,
-                      color: Color(0xFFF5F8FF), size: 16),
-                  const SizedBox(width: 6),
-                  Text(
-                    '₹ ${_fmt(wallet)}',
-                    style: GoogleFonts.lato(
-                      color: const Color(0xFFF5F8FF),
-                      fontSize: 14,
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                  const SizedBox(width: 6),
-                  Container(
-                    width: 18,
-                    height: 18,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: AppColors.goldGradient,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color(0xFF5EA8F5),
-                          blurRadius: 4,
-                        ),
-                      ],
-                    ),
-                    child: const Icon(Icons.add,
-                        color: Color(0xFFF5F8FF), size: 14),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
+    return Container(
+      key: const ValueKey('home_header'),
+      color: const Color(0xFF063D30),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
+      child: Row(children: [
+        IconButton(onPressed: () => _scaffoldKey.currentState?.openDrawer(), icon: const Icon(Icons.menu, color: Colors.white)),
+        Expanded(child: Align(
+          alignment: Alignment.centerLeft,
+          child: Image.asset('assets/images/crore_bet_wordmark.png', key: const ValueKey('header_wordmark'), height: 37, fit: BoxFit.contain),
+        )),
+        InkWell(onTap: _openDeposit, child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+          decoration: BoxDecoration(border: Border.all(color: const Color(0xFFD6AA41)), borderRadius: BorderRadius.circular(14)),
+          child: Row(mainAxisSize: MainAxisSize.min, children: [
+            const Icon(Icons.account_balance_wallet, color: Color(0xFFF4C95D), size: 20),
+            const SizedBox(width: 6),
+            Text('₹ ${_fmt(wallet)}', style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+            const Icon(Icons.chevron_right, color: Color(0xFFF4C95D), size: 19),
+          ]),
+        )),
+      ]),
+    );
+  }
+
+  Widget _heroBanner() {
+    return Container(
+      margin: const EdgeInsets.fromLTRB(12, 12, 12, 4),
+      height: 136,
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(color: const Color(0xFFF3DEB8), borderRadius: BorderRadius.circular(16), border: Border.all(color: const Color(0xFFE7D1A8))),
+      child: Row(children: [
+        Expanded(child: Padding(padding: const EdgeInsets.fromLTRB(16, 14, 0, 12), child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
+          const Text('Namaste!', style: TextStyle(color: Color(0xFF063D30), fontFamily: 'serif', fontSize: 25, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 5),
+          const Text("Ready for today's markets?", style: TextStyle(color: Color(0xFF453D2E), fontSize: 12)),
+        ]))),
+        Image.asset('assets/images/crore_bet_hero.png', height: 136, width: 155, fit: BoxFit.contain),
+      ]),
     );
   }
 
   // ─── QUICK ACTIONS ──────────────────────────────────────
   Widget _quickActions() {
-    final items = [
-      {'img': 'assets/images/q_add_fund.png', 'key': 'add_fund', 'label': 'add_fund'.tr()},
-      {'img': 'assets/images/q_withdraw.png', 'key': 'withdraw', 'label': 'withdraw'.tr()},
-      {'img': 'assets/images/q_bid_history.png', 'key': 'bid_history', 'label': 'bid_history'.tr()},
-      {'img': 'assets/images/q_whatsapp.png', 'key': 'whatsapp', 'label': 'whatsapp'.tr()},
+    final actions = <(IconData, String, VoidCallback)>[
+      (Icons.add_circle_outline, 'add_fund'.tr(), _openDeposit),
+      (Icons.file_upload_outlined, 'withdraw'.tr(), _openWithdraw),
+      (Icons.receipt_long_outlined, 'bid_history'.tr(), _openBidHistory),
+      (Icons.chat_outlined, 'whatsapp'.tr(), _openSupportWhatsApp),
     ];
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: items.map((a) {
-          final key = a['key'] as String;
-          return GestureDetector(
-            onTap: () {
-              if (key == 'add_fund') {
-                _openDeposit();
-              } else if (key == 'withdraw') {
-                _openWithdraw();
-              } else if (key == 'bid_history') {
-                _openBidHistory();
-              } else if (key == 'whatsapp') {
-                _openSupportWhatsApp();
-              }
-            },
-            child: Column(
-              children: [
-                // 🚀 GLOW + DIAGONAL SHINE RAY quick-action circle
-                Container(
-                  width: 74,
-                  height: 74,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xFF5EA8F5).withValues(alpha: 0.20),
-                        blurRadius: 20,
-                        spreadRadius: 2,
-                      ),
-                      BoxShadow(
-                        color: const Color(0xFF70B6FF).withValues(alpha: 0.35),
-                        blurRadius: 10,
-                        spreadRadius: 1,
-                      ),
-                    ],
-                  ),
-                  child: ClipOval(
-                    child: Stack(
-                      children: [
-                        // Base gradient
-                        Positioned.fill(
-                          child: Container(
-                            decoration: const BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [Color(0xFF14284A), Color(0xFF284D7E)],
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                              ),
-                            ),
-                          ),
-                        ),
-                        // Diagonal shine ray
-                        Positioned(
-                          top: -20,
-                          left: -10,
-                          child: IgnorePointer(
-                            child: Transform.rotate(
-                              angle: 0.6,
-                              child: Container(
-                                width: 120,
-                                height: 24,
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      Colors.white.withValues(alpha: 0.0),
-                                      Colors.white.withValues(alpha: 0.55),
-                                      Colors.white.withValues(alpha: 0.0),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        // Border
-                        Positioned.fill(
-                          child: IgnorePointer(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: const Color(0xFF5EA8F5),
-                                  width: 1.5,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        // Image
-                        Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Image.asset(a['img'] as String, fit: BoxFit.contain),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  a['label'] as String,
-                  style: GoogleFonts.lato(
-                    color: const Color(0xFFF5F8FF),
-                    fontSize: 12,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 0.4,
-                  ),
-                ),
-              ],
-            ),
-          );
-        }).toList(),
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+      child: Row(children: actions.map((action) => Expanded(child: InkWell(
+        onTap: action.$3,
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 4),
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 2),
+          decoration: BoxDecoration(color: const Color(0xFFFFFAEF), borderRadius: BorderRadius.circular(12), border: Border.all(color: const Color(0xFFD9C08D))),
+          child: Column(children: [
+            Icon(action.$1, color: const Color(0xFF06503A), size: 26),
+            const SizedBox(height: 5),
+            Text(action.$2, textAlign: TextAlign.center, maxLines: 2, overflow: TextOverflow.ellipsis, style: const TextStyle(color: Color(0xFF063D30), fontSize: 11, fontWeight: FontWeight.bold)),
+          ]),
+        ),
+      ))).toList()),
     );
   }
 
@@ -524,12 +346,12 @@ class _HomeScreenState extends State<HomeScreen> {
         // 🚀 Amber glow only, no black
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF5EA8F5).withValues(alpha: 0.25),
+            color: const Color(0xFFD6AA41).withValues(alpha: 0.25),
             blurRadius: 16,
             spreadRadius: 1,
           ),
           BoxShadow(
-            color: const Color(0xFF284D7E).withValues(alpha: 0.30),
+            color: const Color(0xFF176C4B).withValues(alpha: 0.30),
             blurRadius: 6,
             offset: const Offset(0, 2),
           ),
@@ -544,7 +366,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Container(
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Color(0xFF14284A), Color(0xFF284D7E)],
+                    colors: [Color(0xFF084A35), Color(0xFF176C4B)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -581,7 +403,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(14),
                     border: Border.all(
-                        color: const Color(0xFF5EA8F5), width: 1.4),
+                        color: const Color(0xFFD6AA41), width: 1.4),
                   ),
                 ),
               ),
@@ -691,7 +513,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             const Icon(Icons.cloud_off_rounded,
-                color: Color(0xFFB6C9E2), size: 50),
+                color: Color(0xFFE5D6B7), size: 50),
             const SizedBox(height: 12),
             Text(
               mp.error ?? 'no_markets_available'.tr(),
@@ -777,87 +599,32 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _bottomNav() {
-    final items = [
-      {'img': 'assets/images/nav_bids.png', 'label': 'my_bids'.tr()},
-      {'img': 'assets/images/nav_passbook.png', 'label': 'passbook'.tr()},
-      {'img': 'assets/images/nav_home.png', 'label': 'home'.tr()},
-      {'img': 'assets/images/nav_funds.png', 'label': 'funds'.tr()},
-      {'img': 'assets/images/nav_support.png', 'label': 'support'.tr()},
+    final items = <(IconData, String, VoidCallback)>[
+      (Icons.receipt_long_outlined, 'my_bids'.tr(), _openBidHistory),
+      (Icons.book_outlined, 'passbook'.tr(), _openPassbook),
+      (Icons.home_rounded, 'home'.tr(), () {}),
+      (Icons.account_balance_wallet_outlined, 'funds'.tr(), _openFunds),
+      (Icons.headset_mic_outlined, 'support'.tr(), () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const SupportScreen()))),
     ];
     return Container(
-      decoration: BoxDecoration(
-        color: const Color(0xFF1C3459).withValues(alpha: 0.98),
-        border: Border(
-          top: BorderSide(
-            color: AppColors.flameBorder.withValues(alpha: 0.9),
-            width: 1.5,
-          ),
-        ),
-        // 🚀 Amber glow only — no black shadow
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFF5EA8F5).withValues(alpha: 0.25),
-            blurRadius: 22,
-            offset: const Offset(0, -6),
-          ),
-          BoxShadow(
-            color: const Color(0xFF284D7E).withValues(alpha: 0.30),
-            blurRadius: 8,
-            offset: const Offset(0, -2),
-          ),
-        ],
-      ),
-      child: SafeArea(
-        top: false,
-        bottom: true,
-        left: false,
-        right: false,
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(4, 12, 4, 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: List.generate(items.length, (i) {
-              final item = items[i];
-              final selected = i == _navIndex;
-              final isCenter = i == 2;
-              return GestureDetector(
-                onTap: () {
-                  setState(() => _navIndex = i);
-                  if (i == 0) {
-                    _openBidHistory();
-                  } else if (i == 1) {
-                    _openPassbook();
-                  } else if (i == 3) {
-                    _openFunds();
-                  } else if (i == 4) {
-                    _openSupportWhatsApp();
-                  }
-                },
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    _NavCircle(
-                      imagePath: item['img'] as String,
-                      selected: selected,
-                      isCenter: isCenter,
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      item['label'] as String,
-                      style: GoogleFonts.lato(
-                        color: const Color(0xFFF5F8FF),
-                        fontSize: 10.5,
-                        fontWeight: selected ? FontWeight.w900 : FontWeight.w700,
-                        letterSpacing: 0.3,
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }),
-          ),
-        ),
-      ),
+      key: const ValueKey('home_bottom_navigation'),
+      color: const Color(0xFF063D30),
+      child: SafeArea(top: false, child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: Row(children: List.generate(items.length, (i) {
+          final item = items[i];
+          final selected = i == _navIndex;
+          final color = selected ? const Color(0xFFF4C95D) : Colors.white;
+          return Expanded(child: InkWell(onTap: item.$3, child: SizedBox(
+            height: 50,
+            child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Icon(item.$1, color: color, size: 23),
+              const SizedBox(height: 3),
+              Text(item.$2, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.w600)),
+            ]),
+          )));
+        })),
+      )),
     );
   }
 
@@ -874,76 +641,5 @@ class _HomeScreenState extends State<HomeScreen> {
       b.write(s[i]);
     }
     return b.toString();
-  }
-}
-
-// ─── Nav circle ─────────────────────────────────────────────
-class _NavCircle extends StatelessWidget {
-  final String imagePath;
-  final bool selected;
-  final bool isCenter;
-  const _NavCircle({
-    required this.imagePath,
-    required this.selected,
-    required this.isCenter,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final outerSize = isCenter ? 64.0 : 52.0;
-
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 280),
-      curve: Curves.easeOut,
-      width: outerSize,
-      height: outerSize,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        // 🚀 NO DARK BROWN — light gradient in both states
-        gradient: RadialGradient(
-          colors: selected
-              ? [const Color(0xFF14284A), const Color(0xFF70B6FF)]
-              : [const Color(0xFF14284A), const Color(0xFF284D7E)],
-          center: Alignment.topLeft,
-          radius: 1.3,
-        ),
-        // 🚀 Amber glow only
-        boxShadow: [
-          BoxShadow(
-            color: selected
-                ? const Color(0xFF70B6FF).withValues(alpha: 0.65)
-                : const Color(0xFF5EA8F5).withValues(alpha: 0.30),
-            blurRadius: selected ? 22 : 12,
-            spreadRadius: selected ? 3 : 1,
-          ),
-          if (selected)
-            BoxShadow(
-              color: const Color(0xFF5EA8F5).withValues(alpha: 0.30),
-              blurRadius: 36,
-              spreadRadius: 6,
-            ),
-        ],
-        border: Border.all(
-          color: selected ? const Color(0xFF5EA8F5) : const Color(0xFFFFD54F),
-          width: isCenter ? 2.2 : 1.6,
-        ),
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(isCenter ? 4 : 3),
-        child: Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            border: Border.all(
-              color: Colors.white.withValues(alpha: selected ? 0.7 : 0.4),
-              width: 1,
-            ),
-          ),
-          child: Padding(
-            padding: EdgeInsets.all(isCenter ? 6 : 5),
-            child: Image.asset(imagePath, fit: BoxFit.contain),
-          ),
-        ),
-      ),
-    );
   }
 }

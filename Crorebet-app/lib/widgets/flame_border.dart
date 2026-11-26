@@ -24,7 +24,7 @@ class FlameBorder extends Border {
     final glowPaint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = flameWidth * 3
-      ..color = const Color(0xFF4C9DEB).withValues(alpha: 0.25)
+      ..color = const Color(0xFFD6A634).withValues(alpha: 0.25)
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 6);
 
     // 🔥 Step 2: bright yellow border with fire gradient
@@ -35,10 +35,10 @@ class FlameBorder extends Border {
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: [
-          Color(0xFF1C3459),
-          Color(0xFF72B7FA),
-          Color(0xFF5EA8F5),
-          Color(0xFF397FC6),
+          Color(0xFF0A4A35),
+          Color(0xFFECCF83),
+          Color(0xFFD6AA41),
+          Color(0xFFB9943C),
         ],
         stops: [0.0, 0.35, 0.68, 1.0],
       ).createShader(rect);

@@ -12,6 +12,7 @@ const MENU: Item[] = [
   { label: 'Dashboard', path: '/', icon: 'dashboard' },
   { label: 'All Users', path: '/users', icon: 'users' },
   { label: 'Referrals', path: '/referrals', icon: 'gift' },
+  { label: 'Support', path: '/support', icon: 'users' },
   { label: 'Deposit Transactions', path: '/deposits', icon: 'deposit' },
   { label: 'Auto Result', path: '/auto-result', icon: 'refresh' },
   { label: 'OC Cutting Group', path: '/oc-cutting', icon: 'scissors' },

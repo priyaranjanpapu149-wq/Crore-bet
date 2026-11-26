@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import '../services/api_service.dart';
+import '../services/fcm_service.dart';
 
 class SettingsProvider with ChangeNotifier {
   final _api = ApiService();
@@ -56,11 +56,11 @@ class SettingsProvider with ChangeNotifier {
     // Handle FCM Token for Background Notifications
     try {
       if (value) {
-        // User turned it ON: Generate/Retrieve FCM token so server can send notifications
-        await FirebaseMessaging.instance.getToken();
+        FcmService.reset();
+        await FcmService.init();
       } else {
         // User turned it OFF: Delete token so server can no longer send background notifications
-        await FirebaseMessaging.instance.deleteToken();
+        await FcmService.unregister();
       }
     } catch (e) {
       debugPrint('Error handling FCM token: $e');

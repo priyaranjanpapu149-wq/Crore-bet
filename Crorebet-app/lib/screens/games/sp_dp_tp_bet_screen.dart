@@ -1,3 +1,4 @@
+import '../../utils/bid_cart.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../widgets/flame_border.dart';
 import '../../widgets/flame_text.dart';
@@ -184,6 +185,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
     }
 
     final failures = <Map<String, dynamic>>[];
+    final completedGroups = <String>{};
     num? newWallet;
 
     // ─── One batch per (gameType, session) ─────────────────
@@ -202,6 +204,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
         );
 
         if (res['success'] == true) {
+          completedGroups.add(entry.key);
           final w = res['wallet'];
           if (w is num) newWallet = w;
         } else {
@@ -239,8 +242,12 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
       if (!mounted) return;
       Navigator.pop(context);
     } else {
-      setState(() => _submitting = false);
-      _snack('failed_on'.tr(namedArgs: {
+      setState(() {
+        _submitting = false;
+        removePlacedBidGroups(_cart, completedGroups, byGameType: true);
+      });
+      if (newWallet != null) context.read<AuthProvider>().updateWalletLocally(newWallet);
+      _snack((completedGroups.isNotEmpty ? 'some_bids_placed'.tr() + ' ' : '') + 'failed_on'.tr(namedArgs: {
         'digit': failures.first['digit'].toString(),
         'message': failures.first['message'].toString(),
       }));
@@ -380,14 +387,14 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
               gradient: const LinearGradient(
-                colors: [Color(0xFF14284A), Color(0xFF284D7E)],
+                colors: [Color(0xFF084A35), Color(0xFF176C4B)],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
-              border: Border.all(color: const Color(0xFF5EA8F5), width: 1.3),
+              border: Border.all(color: const Color(0xFFD6AA41), width: 1.3),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF70B6FF).withValues(alpha: 0.4),
+                  color: const Color(0xFFE2BC62).withValues(alpha: 0.4),
                   blurRadius: 10,
                 ),
               ],
@@ -424,7 +431,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           gradient: const LinearGradient(
-            colors: [Color(0xFF14284A), Color(0xFF284D7E)],
+            colors: [Color(0xFF084A35), Color(0xFF176C4B)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -476,7 +483,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         gradient: const LinearGradient(
-          colors: [Color(0xFF14284A), Color(0xFF284D7E)],
+          colors: [Color(0xFF084A35), Color(0xFF176C4B)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -531,7 +538,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
               borderRadius: BorderRadius.circular(24),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF5EA8F5).withValues(alpha: 0.18),
+                  color: const Color(0xFFD6AA41).withValues(alpha: 0.18),
                   blurRadius: 10,
                 ),
               ],
@@ -544,7 +551,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
                     child: Container(
                       decoration: const BoxDecoration(
                         gradient: LinearGradient(
-                          colors: [Color(0xFF14284A), Color(0xFF284D7E)],
+                          colors: [Color(0xFF084A35), Color(0xFF176C4B)],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
@@ -557,7 +564,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(24),
                           border: Border.all(
-                            color: const Color(0xFF5EA8F5),
+                            color: const Color(0xFFD6AA41),
                             width: 1.3,
                           ),
                         ),
@@ -571,7 +578,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
                       child: DropdownButton<String>(
                         value: _session,
                         isExpanded: true,
-                        dropdownColor: const Color(0xFF14284A),
+                        dropdownColor: const Color(0xFF084A35),
                         icon: const Icon(Icons.keyboard_arrow_down_rounded,
                             color: Color(0xFFF5F8FF), size: 20),
                         style: GoogleFonts.lato(
@@ -638,7 +645,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
               boxShadow: selected
                   ? [
                 BoxShadow(
-                  color: const Color(0xFF70B6FF).withValues(alpha: 0.5),
+                  color: const Color(0xFFE2BC62).withValues(alpha: 0.5),
                   blurRadius: 8,
                 ),
               ]
@@ -685,7 +692,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
               borderRadius: BorderRadius.circular(24),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF5EA8F5).withValues(alpha: 0.18),
+                  color: const Color(0xFFD6AA41).withValues(alpha: 0.18),
                   blurRadius: 10,
                 ),
               ],
@@ -698,7 +705,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
                     child: Container(
                       decoration: const BoxDecoration(
                         gradient: LinearGradient(
-                          colors: [Color(0xFF14284A), Color(0xFF284D7E)],
+                          colors: [Color(0xFF084A35), Color(0xFF176C4B)],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
@@ -711,7 +718,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(24),
                           border: Border.all(
-                            color: const Color(0xFF5EA8F5),
+                            color: const Color(0xFFD6AA41),
                             width: 1.3,
                           ),
                         ),
@@ -740,7 +747,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
                       decoration: InputDecoration(
                         hintText: hint,
                         hintStyle: GoogleFonts.lato(
-                          color: const Color(0xFFB6C9E2),
+                          color: const Color(0xFFE5D6B7),
                           fontSize: 13.5,
                           fontWeight: FontWeight.w500,
                         ),
@@ -774,7 +781,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
                 boxShadow: _canAddBid
                     ? [
                   BoxShadow(
-                    color: const Color(0xFF70B6FF)
+                    color: const Color(0xFFE2BC62)
                         .withValues(alpha: 0.5),
                     blurRadius: 14,
                     spreadRadius: 1,
@@ -782,7 +789,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
                 ]
                     : [
                   BoxShadow(
-                    color: const Color(0xFF5EA8F5)
+                    color: const Color(0xFFD6AA41)
                         .withValues(alpha: 0.15),
                     blurRadius: 8,
                   ),
@@ -796,7 +803,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
                       child: Container(
                         decoration: const BoxDecoration(
                           gradient: LinearGradient(
-                            colors: [Color(0xFF14284A), Color(0xFF284D7E)],
+                            colors: [Color(0xFF084A35), Color(0xFF176C4B)],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                           ),
@@ -809,7 +816,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(
-                              color: const Color(0xFF5EA8F5),
+                              color: const Color(0xFFD6AA41),
                               width: 1.5,
                             ),
                           ),
@@ -849,7 +856,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
       decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: Color(0xFF5EA8F5),
+            color: Color(0xFFD6AA41),
             width: 1.4,
           ),
         ),
@@ -869,7 +876,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
               ),
             ),
           ),
-          Container(width: 1, height: 20, color: const Color(0xFF5EA8F5)),
+          Container(width: 1, height: 20, color: const Color(0xFFD6AA41)),
           Expanded(
             flex: 2,
             child: Text(
@@ -883,7 +890,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
               ),
             ),
           ),
-          Container(width: 1, height: 20, color: const Color(0xFF5EA8F5)),
+          Container(width: 1, height: 20, color: const Color(0xFFD6AA41)),
           Expanded(
             flex: 3,
             child: Text(
@@ -910,7 +917,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
         child: Text(
           'no_bids_added'.tr(),
           style: GoogleFonts.lato(
-            color: const Color(0xFFB6C9E2),
+            color: const Color(0xFFE5D6B7),
             fontSize: 13,
             fontWeight: FontWeight.w600,
           ),
@@ -929,7 +936,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
             borderRadius: BorderRadius.circular(10),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF5EA8F5).withValues(alpha: 0.20),
+                color: const Color(0xFFD6AA41).withValues(alpha: 0.20),
                 blurRadius: 8,
               ),
             ],
@@ -942,7 +949,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
                   child: Container(
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [Color(0xFF14284A), Color(0xFF284D7E)],
+                        colors: [Color(0xFF084A35), Color(0xFF176C4B)],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
@@ -955,7 +962,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(
-                          color: const Color(0xFF5EA8F5),
+                          color: const Color(0xFFD6AA41),
                           width: 1.2,
                         ),
                       ),
@@ -1030,17 +1037,17 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
   Widget _bottomBar() {
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFF1C3459).withValues(alpha: 0.98),
+        color: const Color(0xFF0A4A35).withValues(alpha: 0.98),
         border: const Border(
           top: BorderSide(
-            color: Color(0xFF5EA8F5),
+            color: Color(0xFFD6AA41),
             width: 1.4,
           ),
         ),
         // 🚀 AMBER GLOW ONLY — no black shadow
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF5EA8F5).withValues(alpha: 0.30),
+            color: const Color(0xFFD6AA41).withValues(alpha: 0.30),
             blurRadius: 22,
             offset: const Offset(0, -6),
           ),
@@ -1060,7 +1067,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
                   Text(
                     'total_amount'.tr(),
                     style: GoogleFonts.lato(
-                      color: const Color(0xFFE9F1FF),
+                      color: const Color(0xFFFFF8EB),
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
                       letterSpacing: 0.5,
@@ -1093,7 +1100,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
-                        color: const Color(0xFF70B6FF)
+                        color: const Color(0xFFE2BC62)
                             .withValues(alpha: 0.5),
                         blurRadius: 14,
                         spreadRadius: 1,
@@ -1109,8 +1116,8 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
                             decoration: const BoxDecoration(
                               gradient: LinearGradient(
                                 colors: [
-                                  Color(0xFF284D7E),
-                                  Color(0xFF5EA8F5),
+                                  Color(0xFF176C4B),
+                                  Color(0xFFD6AA41),
                                 ],
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
@@ -1188,7 +1195,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF5EA8F5).withValues(alpha: 0.35),
+                color: const Color(0xFFD6AA41).withValues(alpha: 0.35),
                 blurRadius: 28,
                 spreadRadius: 3,
               ),
@@ -1203,9 +1210,9 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          Color(0xFF14284A),
-                          Color(0xFF1C3459),
-                          Color(0xFF284D7E),
+                          Color(0xFF084A35),
+                          Color(0xFF0A4A35),
+                          Color(0xFF176C4B),
                         ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
@@ -1219,7 +1226,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color: const Color(0xFF5EA8F5),
+                          color: const Color(0xFFD6AA41),
                           width: 1.8,
                         ),
                       ),
@@ -1234,7 +1241,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
                       padding: const EdgeInsets.symmetric(vertical: 12),
                       decoration: const BoxDecoration(
                         gradient: LinearGradient(
-                          colors: [Color(0xFF284D7E), Color(0xFF5EA8F5)],
+                          colors: [Color(0xFF176C4B), Color(0xFFD6AA41)],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                         ),
@@ -1322,7 +1329,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
                         'note_bid_cancelled'.tr(),
                         textAlign: TextAlign.center,
                         style: GoogleFonts.lato(
-                          color: const Color(0xFFB6C9E2),
+                          color: const Color(0xFFE5D6B7),
                           fontSize: 11,
                           fontStyle: FontStyle.italic,
                         ),
@@ -1341,7 +1348,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
                                     Navigator.pop(context, false),
                                 style: OutlinedButton.styleFrom(
                                   side: const BorderSide(
-                                      color: Color(0xFF5EA8F5), width: 1.6),
+                                      color: Color(0xFFD6AA41), width: 1.6),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),
@@ -1364,13 +1371,13 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
                               child: OutlinedButton(
                                 onPressed: () => Navigator.pop(context, true),
                                 style: OutlinedButton.styleFrom(
-                                  backgroundColor: const Color(0xFF284D7E),
+                                  backgroundColor: const Color(0xFF176C4B),
                                   side: const BorderSide(
-                                      color: Color(0xFF5EA8F5), width: 1.6),
+                                      color: Color(0xFFD6AA41), width: 1.6),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),
-                                  shadowColor: const Color(0xFF70B6FF),
+                                  shadowColor: const Color(0xFFE2BC62),
                                   elevation: 2,
                                 ),
                                 child: Text(
@@ -1414,12 +1421,12 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         gradient: const LinearGradient(
-          colors: [Color(0xFF14284A), Color(0xFF284D7E)],
+          colors: [Color(0xFF084A35), Color(0xFF176C4B)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         border: Border.all(
-          color: const Color(0xFF5EA8F5),
+          color: const Color(0xFFD6AA41),
           width: 1,
         ),
       ),
@@ -1454,7 +1461,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
               child: Text(
                 type,
                 style: GoogleFonts.lato(
-                  color: const Color(0xFFE9F1FF),
+                  color: const Color(0xFFFFF8EB),
                   fontSize: 11.5,
                   fontWeight: FontWeight.w700,
                 ),
@@ -1473,7 +1480,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
         Text(
           label,
           style: GoogleFonts.lato(
-            color: const Color(0xFFE9F1FF),
+            color: const Color(0xFFFFF8EB),
             fontSize: 11,
             fontWeight: FontWeight.w700,
           ),
@@ -1503,7 +1510,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF5EA8F5).withValues(alpha: 0.35),
+                color: const Color(0xFFD6AA41).withValues(alpha: 0.35),
                 blurRadius: 28,
                 spreadRadius: 3,
               ),
@@ -1518,9 +1525,9 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          Color(0xFF14284A),
-                          Color(0xFF1C3459),
-                          Color(0xFF284D7E),
+                          Color(0xFF084A35),
+                          Color(0xFF0A4A35),
+                          Color(0xFF176C4B),
                         ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
@@ -1534,7 +1541,7 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color: const Color(0xFF5EA8F5),
+                          color: const Color(0xFFD6AA41),
                           width: 1.8,
                         ),
                       ),
@@ -1581,9 +1588,9 @@ class _SpDpTpBetScreenState extends State<SpDpTpBetScreen> {
                         child: OutlinedButton(
                           onPressed: () => Navigator.pop(context),
                           style: OutlinedButton.styleFrom(
-                            backgroundColor: const Color(0xFF284D7E),
+                            backgroundColor: const Color(0xFF176C4B),
                             side: const BorderSide(
-                                color: Color(0xFF5EA8F5), width: 1.6),
+                                color: Color(0xFFD6AA41), width: 1.6),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),

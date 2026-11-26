@@ -10,14 +10,14 @@ import '../../providers/auth_provider.dart';
 import '../../services/api_service.dart';
 
 class GameTheme {
-  static const Color bgDeep        = Color(0xFF1C3459);
-  static const Color panelBg       = Color(0xFF1C3459);
-  static const Color boxBg         = Color(0xFF1C3459);
-  static const Color amber         = Color(0xFF70B6FF);
+  static const Color bgDeep        = Color(0xFF0A4A35);
+  static const Color panelBg       = Color(0xFF0A4A35);
+  static const Color boxBg         = Color(0xFF0A4A35);
+  static const Color amber         = Color(0xFFE2BC62);
   static const Color amberDeep     = Color(0xFFD4A100);
   static const Color amberGlow     = Color(0x59FFC107);
   static const Color cream         = Color(0xFFF5F8FF);
-  static const Color textMuted     = Color(0xFFB6C9E2);
+  static const Color textMuted     = Color(0xFFE5D6B7);
   static const Color textBlack     = Color(0xFFF5F8FF);
   static const Color success       = Color(0xFF10B981);
   static const Color error         = Color(0xFFEF4444);
@@ -267,7 +267,7 @@ class _SingleBetScreenState extends State<SingleBetScreen> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           gradient: const LinearGradient(
-            colors: [Color(0xFF14284A), Color(0xFF284D7E)],
+            colors: [Color(0xFF084A35), Color(0xFF176C4B)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -321,7 +321,7 @@ class _SingleBetScreenState extends State<SingleBetScreen> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         gradient: const LinearGradient(
-          colors: [Color(0xFF14284A), Color(0xFF284D7E)],
+          colors: [Color(0xFF084A35), Color(0xFF176C4B)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -378,7 +378,7 @@ class _SingleBetScreenState extends State<SingleBetScreen> {
               child: Container(
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Color(0xFF14284A), Color(0xFF284D7E)],
+                    colors: [Color(0xFF084A35), Color(0xFF176C4B)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -414,14 +414,14 @@ class _SingleBetScreenState extends State<SingleBetScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      color: const Color(0xFF14284A),
+                      color: const Color(0xFF084A35),
                       border: Border.all(
                           color: GameTheme.amber, width: 1.2),
                     ),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
                         value: _session,
-                        dropdownColor: const Color(0xFF14284A),
+                        dropdownColor: const Color(0xFF084A35),
                         icon: const Icon(
                             Icons.keyboard_arrow_down_rounded,
                             color: GameTheme.textBlack,
@@ -493,7 +493,7 @@ class _SingleBetScreenState extends State<SingleBetScreen> {
               child: Container(
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Color(0xFF14284A), Color(0xFF284D7E)],
+                    colors: [Color(0xFF084A35), Color(0xFF176C4B)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -523,8 +523,8 @@ class _SingleBetScreenState extends State<SingleBetScreen> {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        Color(0xFF284D7E),
-                        Color(0xFF5EA8F5),
+                        Color(0xFF176C4B),
+                        Color(0xFFD6AA41),
                       ],
                     ),
                   ),
@@ -603,7 +603,7 @@ class _SingleBetScreenState extends State<SingleBetScreen> {
               child: Container(
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Color(0xFF14284A), Color(0xFF284D7E)],
+                    colors: [Color(0xFF084A35), Color(0xFF176C4B)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -691,7 +691,7 @@ class _SingleBetScreenState extends State<SingleBetScreen> {
                 child: Container(
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Color(0xFF284D7E), Color(0xFF5EA8F5)],
+                      colors: [Color(0xFF176C4B), Color(0xFFD6AA41)],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
@@ -778,9 +778,9 @@ class _SingleBetScreenState extends State<SingleBetScreen> {
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          Color(0xFF14284A),
-                          Color(0xFF1C3459),
-                          Color(0xFF284D7E),
+                          Color(0xFF084A35),
+                          Color(0xFF0A4A35),
+                          Color(0xFF176C4B),
                         ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
@@ -808,8 +808,8 @@ class _SingleBetScreenState extends State<SingleBetScreen> {
                       decoration: const BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            Color(0xFF284D7E),
-                            Color(0xFF5EA8F5)
+                            Color(0xFF176C4B),
+                            Color(0xFFD6AA41)
                           ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
@@ -939,7 +939,7 @@ class _SingleBetScreenState extends State<SingleBetScreen> {
                                     Navigator.pop(context, true),
                                 style: OutlinedButton.styleFrom(
                                   backgroundColor:
-                                  const Color(0xFF284D7E),
+                                  const Color(0xFF176C4B),
                                   side: const BorderSide(
                                       color: GameTheme.amber, width: 1.6),
                                   shape: RoundedRectangleBorder(
@@ -989,7 +989,7 @@ class _SingleBetScreenState extends State<SingleBetScreen> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         gradient: const LinearGradient(
-          colors: [Color(0xFF14284A), Color(0xFF284D7E)],
+          colors: [Color(0xFF084A35), Color(0xFF176C4B)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -1093,9 +1093,9 @@ class _SingleBetScreenState extends State<SingleBetScreen> {
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          Color(0xFF14284A),
-                          Color(0xFF1C3459),
-                          Color(0xFF284D7E),
+                          Color(0xFF084A35),
+                          Color(0xFF0A4A35),
+                          Color(0xFF176C4B),
                         ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
@@ -1154,7 +1154,7 @@ class _SingleBetScreenState extends State<SingleBetScreen> {
                         child: OutlinedButton(
                           onPressed: () => Navigator.pop(context),
                           style: OutlinedButton.styleFrom(
-                            backgroundColor: const Color(0xFF284D7E),
+                            backgroundColor: const Color(0xFF176C4B),
                             side: const BorderSide(
                                 color: GameTheme.amber, width: 1.6),
                             shape: RoundedRectangleBorder(

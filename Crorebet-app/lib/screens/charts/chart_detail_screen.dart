@@ -137,7 +137,7 @@ class _ChartDetailScreenState extends State<ChartDetailScreen>
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        color: const Color(0xFF1C3459),
+        color: const Color(0xFF0A4A35),
         border: FlameBorder(width: 1.2),
       ),
       child: TabBar(
@@ -200,7 +200,7 @@ class _ChartDetailScreenState extends State<ChartDetailScreen>
       const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: const Color(0xFF1C3459),
+        color: const Color(0xFF0A4A35),
         border: FlameBorder(width: 1),
       ),
       child: Row(
@@ -209,7 +209,7 @@ class _ChartDetailScreenState extends State<ChartDetailScreen>
             child: Text(
               date,
               style: GoogleFonts.lato(
-                color: const Color(0xFFE9F1FF),
+                color: const Color(0xFFFFF8EB),
                 fontSize: 12.5,
                 fontWeight: FontWeight.w600,
               ),
@@ -220,7 +220,7 @@ class _ChartDetailScreenState extends State<ChartDetailScreen>
             const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
-              color: const Color(0xFF25456F),
+              color: const Color(0xFF146043),
               border: FlameBorder(width: 1),
             ),
             child: FlameText(child: Text(
@@ -251,7 +251,7 @@ class _ChartDetailScreenState extends State<ChartDetailScreen>
       const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: const Color(0xFF1C3459),
+        color: const Color(0xFF0A4A35),
         border: FlameBorder(width: 1),
       ),
       child: Column(
@@ -260,7 +260,7 @@ class _ChartDetailScreenState extends State<ChartDetailScreen>
           Text(
             date,
             style: GoogleFonts.lato(
-              color: const Color(0xFFE9F1FF),
+              color: const Color(0xFFFFF8EB),
               fontSize: 11.5,
               fontWeight: FontWeight.w600,
             ),
@@ -291,7 +291,7 @@ class _ChartDetailScreenState extends State<ChartDetailScreen>
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        color: const Color(0xFF25456F),
+        color: const Color(0xFF146043),
         border: FlameBorder(width: 1),
       ),
       child: FlameText(child: Text(

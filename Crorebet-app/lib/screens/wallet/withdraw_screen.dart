@@ -48,7 +48,7 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF5EA8F5).withValues(alpha: 0.35),
+                color: const Color(0xFFD6AA41).withValues(alpha: 0.35),
                 blurRadius: 30,
                 spreadRadius: 3,
               ),
@@ -63,9 +63,9 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          Color(0xFF14284A),
-                          Color(0xFF1C3459),
-                          Color(0xFF284D7E),
+                          Color(0xFF084A35),
+                          Color(0xFF0A4A35),
+                          Color(0xFF176C4B),
                         ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
@@ -103,7 +103,7 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                          color: const Color(0xFF5EA8F5),
+                          color: const Color(0xFFD6AA41),
                           width: 1.8,
                         ),
                       ),
@@ -170,13 +170,13 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                         child: OutlinedButton(
                           onPressed: () => Navigator.pop(context),
                           style: OutlinedButton.styleFrom(
-                            backgroundColor: const Color(0xFF284D7E),
+                            backgroundColor: const Color(0xFF176C4B),
                             side: const BorderSide(
-                                color: Color(0xFF5EA8F5), width: 1.6),
+                                color: Color(0xFFD6AA41), width: 1.6),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
-                            shadowColor: const Color(0xFF70B6FF),
+                            shadowColor: const Color(0xFFE2BC62),
                             elevation: 2,
                           ),
                           child: Text(
@@ -214,7 +214,7 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
               height: 6,
               decoration: const BoxDecoration(
                 shape: BoxShape.circle,
-                color: Color(0xFF5EA8F5),
+                color: Color(0xFFD6AA41),
               ),
             ),
           ),
@@ -260,7 +260,7 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(msg),
-      backgroundColor: const Color(0xFF25456F),
+      backgroundColor: const Color(0xFF146043),
       behavior: SnackBarBehavior.floating,
       duration: const Duration(seconds: 3),
     ));
@@ -297,9 +297,9 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          Color(0xFF14284A),
-                          Color(0xFF1C3459),
-                          Color(0xFF284D7E),
+                          Color(0xFF084A35),
+                          Color(0xFF0A4A35),
+                          Color(0xFF176C4B),
                         ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
@@ -364,7 +364,7 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                         message,
                         textAlign: TextAlign.center,
                         style: GoogleFonts.lato(
-                          color: const Color(0xFFE9F1FF),
+                          color: const Color(0xFFFFF8EB),
                           fontSize: 13,
                           height: 1.5,
                           fontWeight: FontWeight.w500,
@@ -377,9 +377,9 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                         child: OutlinedButton(
                           onPressed: () => Navigator.pop(context),
                           style: OutlinedButton.styleFrom(
-                            backgroundColor: const Color(0xFF284D7E),
+                            backgroundColor: const Color(0xFF176C4B),
                             side: const BorderSide(
-                                color: Color(0xFF5EA8F5), width: 1.6),
+                                color: Color(0xFFD6AA41), width: 1.6),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -452,7 +452,7 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: const Color(0xFF5EA8F5).withValues(alpha: 0.35),
+                  color: const Color(0xFFD6AA41).withValues(alpha: 0.35),
                   blurRadius: 24,
                   spreadRadius: 2,
                 ),
@@ -467,9 +467,9 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                       decoration: const BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            Color(0xFF14284A),
-                            Color(0xFF1C3459),
-                            Color(0xFF284D7E),
+                            Color(0xFF084A35),
+                            Color(0xFF0A4A35),
+                            Color(0xFF176C4B),
                           ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
@@ -507,7 +507,7 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(
-                            color: const Color(0xFF5EA8F5),
+                            color: const Color(0xFFD6AA41),
                             width: 1.8,
                           ),
                         ),
@@ -555,7 +555,7 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                             }),
                             textAlign: TextAlign.center,
                             style: GoogleFonts.lato(
-                              color: const Color(0xFFE9F1FF),
+                              color: const Color(0xFFFFF8EB),
                               fontSize: 12,
                               fontWeight: FontWeight.w600,
                             ),
@@ -568,12 +568,12 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                                 horizontal: 14, vertical: 4),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12),
-                              color: const Color(0xFF14284A),
+                              color: const Color(0xFF084A35),
                               border: Border.all(
-                                  color: const Color(0xFF5EA8F5), width: 1.4),
+                                  color: const Color(0xFFD6AA41), width: 1.4),
                               boxShadow: [
                                 BoxShadow(
-                                  color: const Color(0xFF5EA8F5)
+                                  color: const Color(0xFFD6AA41)
                                       .withValues(alpha: 0.20),
                                   blurRadius: 12,
                                 ),
@@ -587,12 +587,12 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                                     shape: BoxShape.circle,
                                     gradient: const LinearGradient(
                                       colors: [
-                                        Color(0xFF14284A),
-                                        Color(0xFF1C3459)
+                                        Color(0xFF084A35),
+                                        Color(0xFF0A4A35)
                                       ],
                                     ),
                                     border: Border.all(
-                                      color: const Color(0xFF5EA8F5),
+                                      color: const Color(0xFFD6AA41),
                                       width: 1,
                                     ),
                                   ),
@@ -622,7 +622,7 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                                     decoration: InputDecoration(
                                       hintText: 'enter_amount'.tr(),
                                       hintStyle: GoogleFonts.lato(
-                                        color: const Color(0xFFB6C9E2),
+                                        color: const Color(0xFFE5D6B7),
                                         fontSize: 15,
                                       ),
                                       border: InputBorder.none,
@@ -681,7 +681,7 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                                     style: OutlinedButton.styleFrom(
                                       backgroundColor: Colors.transparent,
                                       side: const BorderSide(
-                                          color: Color(0xFF5EA8F5), width: 1.6),
+                                          color: Color(0xFFD6AA41), width: 1.6),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(12),
                                       ),
@@ -732,13 +732,13 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                                       await _submitRequest(amt, method);
                                     },
                                     style: OutlinedButton.styleFrom(
-                                      backgroundColor: const Color(0xFF284D7E),
+                                      backgroundColor: const Color(0xFF176C4B),
                                       side: const BorderSide(
-                                          color: Color(0xFF5EA8F5), width: 1.6),
+                                          color: Color(0xFFD6AA41), width: 1.6),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(12),
                                       ),
-                                      shadowColor: const Color(0xFF70B6FF),
+                                      shadowColor: const Color(0xFFE2BC62),
                                       elevation: 2,
                                     ),
                                     child: Text(
@@ -786,13 +786,13 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
-                color: const Color(0xFF5EA8F5),
+                color: const Color(0xFFD6AA41),
                 width: selected ? 5 : 1.4,
               ),
               boxShadow: selected
                   ? [
                 BoxShadow(
-                  color: const Color(0xFF70B6FF).withValues(alpha: 0.5),
+                  color: const Color(0xFFE2BC62).withValues(alpha: 0.5),
                   blurRadius: 8,
                 ),
               ]
@@ -862,7 +862,7 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF5EA8F5).withValues(alpha: 0.35),
+                color: const Color(0xFFD6AA41).withValues(alpha: 0.35),
                 blurRadius: 28,
                 spreadRadius: 3,
               ),
@@ -877,9 +877,9 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          Color(0xFF14284A),
-                          Color(0xFF1C3459),
-                          Color(0xFF284D7E),
+                          Color(0xFF084A35),
+                          Color(0xFF0A4A35),
+                          Color(0xFF176C4B),
                         ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
@@ -893,7 +893,7 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                          color: const Color(0xFF5EA8F5),
+                          color: const Color(0xFFD6AA41),
                           width: 1.8,
                         ),
                       ),
@@ -940,7 +940,7 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                         }),
                         textAlign: TextAlign.center,
                         style: GoogleFonts.lato(
-                          color: const Color(0xFFE9F1FF),
+                          color: const Color(0xFFFFF8EB),
                           fontSize: 12.5,
                           height: 1.5,
                           fontWeight: FontWeight.w500,
@@ -953,9 +953,9 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                         child: OutlinedButton(
                           onPressed: () => Navigator.pop(context),
                           style: OutlinedButton.styleFrom(
-                            backgroundColor: const Color(0xFF284D7E),
+                            backgroundColor: const Color(0xFF176C4B),
                             side: const BorderSide(
-                                color: Color(0xFF5EA8F5), width: 1.6),
+                                color: Color(0xFFD6AA41), width: 1.6),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -1063,12 +1063,12 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
         borderRadius: BorderRadius.circular(18),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF5EA8F5).withValues(alpha: 0.22),
+            color: const Color(0xFFD6AA41).withValues(alpha: 0.22),
             blurRadius: 26,
             spreadRadius: 2,
           ),
           BoxShadow(
-            color: const Color(0xFF70B6FF).withValues(alpha: 0.35),
+            color: const Color(0xFFE2BC62).withValues(alpha: 0.35),
             blurRadius: 12,
             spreadRadius: 1,
           ),
@@ -1083,9 +1083,9 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      Color(0xFF14284A),
-                      Color(0xFF1C3459),
-                      Color(0xFF284D7E),
+                      Color(0xFF084A35),
+                      Color(0xFF0A4A35),
+                      Color(0xFF176C4B),
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -1123,7 +1123,7 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(18),
                     border: Border.all(
-                      color: const Color(0xFF5EA8F5),
+                      color: const Color(0xFFD6AA41),
                       width: 1.8,
                     ),
                   ),
@@ -1196,7 +1196,7 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
                           gradient: const LinearGradient(
-                            colors: [Color(0xFF284D7E), Color(0xFF5EA8F5)],
+                            colors: [Color(0xFF176C4B), Color(0xFFD6AA41)],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                           ),
@@ -1206,7 +1206,7 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: const Color(0xFF70B6FF)
+                              color: const Color(0xFFE2BC62)
                                   .withValues(alpha: 0.55),
                               blurRadius: 16,
                               spreadRadius: 2,
@@ -1272,7 +1272,7 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFF5EA8F5).withValues(alpha: 0.18),
+              color: const Color(0xFFD6AA41).withValues(alpha: 0.18),
               blurRadius: 18,
               spreadRadius: 1,
             ),
@@ -1286,7 +1286,7 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                 child: Container(
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Color(0xFF14284A), Color(0xFF284D7E)],
+                      colors: [Color(0xFF084A35), Color(0xFF176C4B)],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
@@ -1299,7 +1299,7 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(
-                        color: const Color(0xFF5EA8F5),
+                        color: const Color(0xFFD6AA41),
                         width: 1.4,
                       ),
                     ),
@@ -1315,7 +1315,7 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                       'withdraw_queries_whatsapp_call'.tr(),
                       textAlign: TextAlign.center,
                       style: GoogleFonts.lato(
-                        color: const Color(0xFFE9F1FF),
+                        color: const Color(0xFFFFF8EB),
                         fontSize: 12.5,
                         fontWeight: FontWeight.w600,
                       ),
@@ -1328,7 +1328,7 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                       style: GoogleFonts.lato(
                         color: hasNumber
                             ? const Color(0xFF15803D)
-                            : const Color(0xFFB6C9E2),
+                            : const Color(0xFFE5D6B7),
                         fontSize: 20,
                         fontWeight: FontWeight.w900,
                         letterSpacing: 1.2,
@@ -1363,7 +1363,7 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF5EA8F5).withValues(alpha: 0.18),
+            color: const Color(0xFFD6AA41).withValues(alpha: 0.18),
             blurRadius: 18,
             spreadRadius: 1,
           ),
@@ -1377,7 +1377,7 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
               child: Container(
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Color(0xFF14284A), Color(0xFF284D7E)],
+                    colors: [Color(0xFF084A35), Color(0xFF176C4B)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -1390,7 +1390,7 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: const Color(0xFF5EA8F5),
+                      color: const Color(0xFFD6AA41),
                       width: 1.4,
                     ),
                   ),
@@ -1415,7 +1415,7 @@ class _WithdrawScreenState extends State<WithdrawScreen> {
                   Text(
                     'withdraw_hours'.tr(),
                     style: GoogleFonts.lato(
-                      color: const Color(0xFFE9F1FF),
+                      color: const Color(0xFFFFF8EB),
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
                     ),

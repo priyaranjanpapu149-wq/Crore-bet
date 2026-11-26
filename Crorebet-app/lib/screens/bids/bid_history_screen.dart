@@ -119,7 +119,7 @@ class _BidHistoryScreenState extends State<BidHistoryScreen> {
     }
     return RefreshIndicator(
       color: const Color(0xFFF5F8FF),
-      backgroundColor: const Color(0xFF25456F),
+      backgroundColor: const Color(0xFF146043),
       onRefresh: _load,
       child: ListView.builder(
         padding: const EdgeInsets.fromLTRB(12, 4, 12, 20),
@@ -136,12 +136,12 @@ class _BidHistoryScreenState extends State<BidHistoryScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           const Icon(Icons.receipt_long_rounded,
-              color: const Color(0xFFB6C9E2), size: 60),
+              color: const Color(0xFFE5D6B7), size: 60),
           const SizedBox(height: 14),
           FlameText(child: Text(
             msg,
             style: GoogleFonts.lato(
-              color: const Color(0xFFE9F1FF),
+              color: const Color(0xFFFFF8EB),
               fontSize: 14,
             ),
           )),
@@ -193,7 +193,7 @@ class _BidCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 6),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        color: const Color(0xFF1C3459),
+        color: const Color(0xFF0A4A35),
         border: FlameBorder(width: 1.3),
         boxShadow: [
           BoxShadow(
@@ -212,7 +212,7 @@ class _BidCard extends StatelessWidget {
               borderRadius:
               const BorderRadius.vertical(top: Radius.circular(11)),
               gradient: const LinearGradient(
-                colors: [Color(0xFF1C3459), Color(0xFF25456F)],
+                colors: [Color(0xFF0A4A35), Color(0xFF146043)],
               ),
               border: Border(
                 bottom: BorderSide(
@@ -289,7 +289,7 @@ class _BidCard extends StatelessWidget {
                 FlameText(child: Text(
                   'Transaction Time:  ',
                   style: GoogleFonts.lato(
-                    color: const Color(0xFFE9F1FF),
+                    color: const Color(0xFFFFF8EB),
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
                   ),
@@ -311,7 +311,7 @@ class _BidCard extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.symmetric(vertical: 10),
             decoration: BoxDecoration(
-              color: const Color(0xFF1C3459),
+              color: const Color(0xFF0A4A35),
               borderRadius:
               const BorderRadius.vertical(bottom: Radius.circular(11)),
               border: Border(
@@ -359,7 +359,7 @@ class _BidCard extends StatelessWidget {
         FlameText(child: Text(
           label,
           style: GoogleFonts.lato(
-            color: const Color(0xFFE9F1FF),
+            color: const Color(0xFFFFF8EB),
             fontSize: 11,
             fontWeight: FontWeight.w600,
           ),

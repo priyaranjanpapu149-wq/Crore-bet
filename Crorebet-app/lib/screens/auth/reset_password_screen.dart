@@ -80,7 +80,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           content: Text(
             'password_reset_success_msg'.tr(),
             style: GoogleFonts.lato(
-              color: const Color(0xFFE9F1FF),
+              color: const Color(0xFFFFF8EB),
               fontSize: 13.5,
               height: 1.5,
             ),
@@ -192,7 +192,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                   }),
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.lato(
-                                    color: const Color(0xFFE9F1FF),
+                                    color: const Color(0xFFFFF8EB),
                                     fontSize: w < 360 ? 11.5 : 12.5,
                                     height: 1.55,
                                     fontWeight: FontWeight.w500,
@@ -210,7 +210,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                     _obscureNew
                                         ? Icons.visibility_off_outlined
                                         : Icons.visibility_outlined,
-                                    color: const Color(0xFFF5F8FF),
+                                    color: const Color(0xFF063D30),
                                     size: 20,
                                   ),
                                   onPressed: () =>
@@ -238,7 +238,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                     _obscureConfirm
                                         ? Icons.visibility_off_outlined
                                         : Icons.visibility_outlined,
-                                    color: const Color(0xFFF5F8FF),
+                                    color: const Color(0xFF063D30),
                                     size: 20,
                                   ),
                                   onPressed: () => setState(

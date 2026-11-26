@@ -2173,41 +2173,6 @@ router.post('/wallet/add', async (req, res) => {
       },
     });
 
-    // 🚀 FCM push for both credit AND debit
-    try {
-      const user = await prisma.user.findUnique({
-        where: { id: userId },
-        select: { name: true, wallet: true },
-      });
-
-      const balance = Math.round(Number(user?.wallet ?? 0));
-
-      if (type === 1) {
-        // Credit
-        const title = bonus > 0
-          ? `💰 ₹${amt} + ₹${bonus} Bonus Credited`
-          : `💰 ₹${amt} Added to Wallet`;
-        const body = bonus > 0
-          ? `₹${amt} + ₹${bonus} bonus added. New balance: ₹${balance}`
-          : `₹${amt} added. New balance: ₹${balance}`;
-        sendToUser(userId, title, body, {
-          type: 'credit',
-          amount: String(amt),
-          bonus: String(bonus),
-        }).catch((e) => console.error('[fcm] credit push failed:', e?.message));
-      } else {
-        // 🚀 Debit
-        const title = `⚠️ ₹${amt} Deducted from Wallet`;
-        const body = `₹${amt} has been deducted by Admin. New balance: ₹${balance}`;
-        sendToUser(userId, title, body, {
-          type: 'debit',
-          amount: String(amt),
-        }).catch((e) => console.error('[fcm] debit push failed:', e?.message));
-      }
-    } catch (e: any) {
-      console.error('[fcm] push prep failed:', e?.message);
-    }
-
     return ok(
       res,
       { bonus, totalCredited },
@@ -3740,7 +3705,7 @@ router.get('/referrals', async (req, res) => {
 router.post('/referrals/:id/pay', async (req, res) => {
   try {
     const { cashbackAmount } = req.body;
-    const { payCashback } = await import('../services/referral.service');
+    const { payCashback } = await import('../services/referral.service.js');
     const updated = await payCashback(
       String(req.params.id),
       cashbackAmount ? Number(cashbackAmount) : undefined
@@ -3775,7 +3740,7 @@ router.post('/referrals/:id/recheck', async (req, res) => {
   try {
     const ref = await prisma.referral.findUnique({ where: { id: String(req.params.id) } });
     if (!ref) return notFound(res);
-    const { checkEligibility } = await import('../services/referral.service');
+    const { checkEligibility } = await import('../services/referral.service.js');
     await checkEligibility(ref.refereeMobile);
     const updated = await prisma.referral.findUnique({ where: { id: ref.id } });
     return ok(res, updated, 'Rechecked');
@@ -3786,7 +3751,7 @@ router.post('/referrals/:id/recheck', async (req, res) => {
 
 router.get('/referrals/settings', async (req, res) => {
   try {
-    const { getConfig } = await import('../services/referral.service');
+    const { getConfig } = await import('../services/referral.service.js');
     const cfg = await getConfig();
     return ok(res, cfg);
   } catch (e: any) {

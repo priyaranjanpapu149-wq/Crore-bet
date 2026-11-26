@@ -84,6 +84,7 @@ model User {
   withdrawals  Withdrawal[]
   bankDetails  BankDetail[]
   chatMessages ChatMessage[]
+  supportConversation SupportConversation?
   upiVerifs    UpiVerification[]
 
   @@index([mobile])
@@ -420,6 +421,14 @@ model ChatMessage {
 
   @@index([userId, createdAt])
   @@map("chat_messages")
+}
+
+model SupportConversation {
+  userId String @id
+  status String @default("pending")
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("support_conversations")
 }
 
 // ============================================================

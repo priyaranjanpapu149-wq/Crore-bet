@@ -71,7 +71,7 @@ class _AppNotificationBannerState extends State<AppNotificationBanner>
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
               gradient: const LinearGradient(
-                colors: [Color(0xFF1C3459), Color(0xFF1C3459)],
+                colors: [Color(0xFF0A4A35), Color(0xFF0A4A35)],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
@@ -134,43 +134,10 @@ class _AppNotificationBannerState extends State<AppNotificationBanner>
 
                   // Content
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(14, 14, 14, 14),
+                    padding: const EdgeInsets.fromLTRB(14, 14, 38, 14),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Lotus emblem
-                        Container(
-                          width: 62,
-                          height: 62,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: const Color(0xFF25456F),
-                            border: Border.all(
-                              color: const Color(0xFFF5F8FF),
-                              width: 1.6,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.gold.withValues(alpha: 0.4),
-                                blurRadius: 14,
-                              ),
-                            ],
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Image.asset(
-                              'assets/images/lotus.png',
-                              fit: BoxFit.contain,
-                              errorBuilder: (_, __, ___) => const Icon(
-                                Icons.spa_rounded,
-                                color: Color(0xFFF5F8FF),
-                                size: 28,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 14),
-
                         // Text column
                         Expanded(
                           child: Column(
@@ -202,7 +169,7 @@ class _AppNotificationBannerState extends State<AppNotificationBanner>
                                 Text(
                                   widget.subtitle!,
                                   style: GoogleFonts.lato(
-                                    color: const Color(0xFFB6C9E2),
+                                    color: const Color(0xFFE5D6B7),
                                     fontSize: 10.5,
                                     fontWeight: FontWeight.w600,
                                   ),

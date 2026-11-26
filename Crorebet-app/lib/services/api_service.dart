@@ -137,8 +137,8 @@ class ApiService {
 
     if (kDebugMode) {
       dio.interceptors.add(LogInterceptor(
-        requestBody: true,
-        responseBody: true,
+        requestBody: false,
+        responseBody: false,
         requestHeader: false,
         responseHeader: false,
         logPrint: (obj) {
@@ -574,7 +574,7 @@ class ApiService {
         errorMessage =
             e.response!.data['message']?.toString() ?? 'Bad request';
       } else {
-        errorMessage = e.message ?? 'Network error. Please try again.';
+        errorMessage = 'Connection lost. Check bid history before retrying; the submission may have completed.';
       }
       return {
         'success': false,
@@ -666,13 +666,15 @@ class ApiService {
   // FCM TOKEN
   // ═══════════════════════════════════════════════════════════
   Future<void> registerFcmToken(String token) async {
-    try {
-      await _dio.post('api/user/fcm-token', data: {
-        'token': token,
-        'platform': 'android',
-        'topics': <String>[],
-      });
-    } catch (_) {}
+    await _dio.post('api/user/fcm-token', data: {
+      'token': token,
+      'platform': 'android',
+      'topics': <String>[],
+    });
+  }
+
+  Future<void> removeFcmToken(String token) async {
+    await _dio.post('api/user/fcm-token/remove', data: {'token': token});
   }
 
   // ═══════════════════════════════════════════════════════════
@@ -712,6 +714,20 @@ class ApiService {
   Future<Map<String, dynamic>> getSession() async {
     final r = await _dio.get(ApiConfig.sessionCheck);
     return r.data;
+  }
+
+  Future<List<dynamic>> getSupportMessages() async {
+    final response = await _dio.get('api/support/user/messages');
+    return response.data['data'] as List<dynamic>;
+  }
+
+  Future<List<dynamic>> getSupportQuestions() async {
+    final response = await _dio.get('api/support/user/questions');
+    return response.data['data'] as List<dynamic>;
+  }
+
+  Future<void> sendSupportMessage(String message) async {
+    await _dio.post('api/support/user/messages', data: {'message': message});
   }
 
   Future<void> logout() async {

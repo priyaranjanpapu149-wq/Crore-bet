@@ -34,21 +34,21 @@ class _ThemeHoverShadowState extends State<ThemeHoverShadow> {
               boxShadow: [
                 // 🔥 Outer orange fire glow
                 BoxShadow(
-                  color: const Color(0xFF397FC6)
+                  color: const Color(0xFFB9943C)
                       .withValues(alpha: 0.5 * amount),
                   blurRadius: 32 * amount,
                   spreadRadius: 4 * amount,
                 ),
                 // 🔥 Mid amber fire glow
                 BoxShadow(
-                  color: const Color(0xFF5EA8F5)
+                  color: const Color(0xFFD6AA41)
                       .withValues(alpha: 0.6 * amount),
                   blurRadius: 20 * amount,
                   spreadRadius: 3 * amount,
                 ),
                 // 🔥 Inner bright yellow fire
                 BoxShadow(
-                  color: const Color(0xFF78B9FF)
+                  color: const Color(0xFFD4A83A)
                       .withValues(alpha: 0.8 * amount),
                   blurRadius: 12 * amount,
                   spreadRadius: 1 * amount,

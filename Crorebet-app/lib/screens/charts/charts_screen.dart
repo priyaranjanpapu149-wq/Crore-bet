@@ -123,7 +123,7 @@ class _ChartsScreenState extends State<ChartsScreen> {
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        color: const Color(0xFF1C3459),
+        color: const Color(0xFF0A4A35),
         border: FlameBorder(width: 1.3),
         boxShadow: [
           BoxShadow(
@@ -149,7 +149,7 @@ class _ChartsScreenState extends State<ChartsScreen> {
               decoration: InputDecoration(
                 hintText: 'Search chart',
                 hintStyle: GoogleFonts.lato(
-                  color: const Color(0xFFB6C9E2),
+                  color: const Color(0xFFE5D6B7),
                   fontSize: 14,
                 ),
                 border: InputBorder.none,
@@ -178,7 +178,7 @@ class _ChartsScreenState extends State<ChartsScreen> {
       child: Text(
         'No charts found',
         style: GoogleFonts.lato(
-          color: const Color(0xFFE9F1FF),
+          color: const Color(0xFFFFF8EB),
           fontSize: 14,
         ),
       ),
@@ -200,7 +200,7 @@ class _ChartCard extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(14),
           gradient: const LinearGradient(
-            colors: [Color(0xFF1C3459), Color(0xFF1C3459)],
+            colors: [Color(0xFF0A4A35), Color(0xFF0A4A35)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),

@@ -96,7 +96,7 @@ class AppDrawer extends StatelessWidget {
                   Text(
                     'total_balance'.tr(),
                     style: GoogleFonts.lato(
-                      color: const Color(0xFFE9F1FF),
+                      color: const Color(0xFFFFF8EB),
                       fontSize: 10,
                       letterSpacing: 3,
                       fontWeight: FontWeight.w600,
@@ -267,7 +267,7 @@ class AppDrawer extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
-            color: const Color(0xFF1C3459).withValues(alpha: 0.55),
+            color: const Color(0xFF0A4A35).withValues(alpha: 0.55),
             border: FlameBorder(width: 1.0),
           ),
           child: Row(
@@ -277,7 +277,7 @@ class AppDrawer extends StatelessWidget {
                 height: 42,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: const Color(0xFF25456F),
+                  color: const Color(0xFF146043),
                   border: FlameBorder(width: 1.2),
                   boxShadow: [
                     BoxShadow(
@@ -309,9 +309,9 @@ class AppDrawer extends StatelessWidget {
               Switch(
                 value: settings.notificationsEnabled,
                 activeColor: const Color(0xFFF5F8FF),
-                activeTrackColor: const Color(0xFF25456F),
-                inactiveThumbColor: const Color(0xFFE9F1FF),
-                inactiveTrackColor: const Color(0xFF1C3459),
+                activeTrackColor: const Color(0xFF146043),
+                inactiveThumbColor: const Color(0xFFFFF8EB),
+                inactiveTrackColor: const Color(0xFF0A4A35),
                 onChanged: (bool value) async {
                   await settings.toggleNotifications(value);
                 },
@@ -335,7 +335,7 @@ class AppDrawer extends StatelessWidget {
 
     showModalBottomSheet(
       context: drawerContext,
-      backgroundColor: const Color(0xFF1C3459), // Light yellow background
+      backgroundColor: const Color(0xFF0A4A35), // Light yellow background
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
@@ -395,7 +395,7 @@ class AppDrawer extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                         color: selected
                             ? const Color(0xFFF5F8FF).withValues(alpha: 0.1)
-                            : const Color(0xFF1C3459),
+                            : const Color(0xFF0A4A35),
                         border: Border.all(
                           color: selected
                               ? const Color(0xFFF5F8FF)
@@ -473,7 +473,7 @@ class AppDrawer extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: FlameBorder(width: 2.8),
-              color: const Color(0xFF25456F),
+              color: const Color(0xFF146043),
             ),
             child: ClipOval(
               child: Image.asset(
@@ -507,7 +507,7 @@ class AppDrawer extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(7),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF25456F),
+                  color: const Color(0xFF146043),
                   borderRadius: BorderRadius.circular(8),
                   border: FlameBorder(width: 1.3),
                 ),
@@ -535,7 +535,7 @@ class AppDrawer extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 11),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(6),
-            color: const Color(0xFF25456F).withValues(alpha: 0.7),
+            color: const Color(0xFF146043).withValues(alpha: 0.7),
             border: FlameBorder(width: 1.3),
           ),
           child: Row(
@@ -582,7 +582,7 @@ class AppDrawer extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
-              color: const Color(0xFF1C3459).withValues(alpha: 0.55),
+              color: const Color(0xFF0A4A35).withValues(alpha: 0.55),
               border: FlameBorder(width: 1.0),
             ),
             child: Row(
@@ -592,7 +592,7 @@ class AppDrawer extends StatelessWidget {
                   height: 42,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: const Color(0xFF25456F),
+                    color: const Color(0xFF146043),
                     border: FlameBorder(width: 1.2),
                     boxShadow: [
                       BoxShadow(
@@ -651,7 +651,7 @@ class _StarPoint extends StatelessWidget {
       height: s,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: const Color(0xFF1C3459),
+        color: const Color(0xFF0A4A35),
         border: FlameBorder(width: 1),
       ),
       child: Icon(

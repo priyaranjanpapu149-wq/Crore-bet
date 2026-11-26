@@ -18,7 +18,7 @@ class MagicBossLogo extends StatelessWidget {
       ),
       child: ClipOval(
         child: Image.asset(
-          'assets/images/MagicBoss.webp',
+          'assets/images/crore_bet_wordmark.png',
           fit: BoxFit.cover,
           errorBuilder: (_, __, ___) => Container(
             decoration: const BoxDecoration(

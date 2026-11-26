@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import prisma from '../config/db';
 import { requireUser } from '../middleware/auth';
 import { ok, badRequest, serverError, notFound } from '../utils/response';
-import { registerToken } from '../services/fcm.service';
+import { registerToken, unsubscribeTokenFromTopic } from '../services/fcm.service';
 
 const router = Router();
 router.use(requireUser);
@@ -210,6 +210,22 @@ router.post('/fcm-token', async (req, res) => {
       topics: Array.isArray(topics) ? topics : [],
     });
     return ok(res, { id: record.id }, 'Token saved');
+  } catch (e: any) { return serverError(res, e.message); }
+});
+
+router.post('/fcm-token/remove', async (req, res) => {
+  try {
+    const { token } = req.body;
+    if (!token || typeof token !== 'string') return badRequest(res, 'Missing token');
+    const result = await prisma.deviceToken.updateMany({
+      where: { token, userId: req.user!.sub },
+      data: { active: false, userId: null },
+    });
+    if (result.count) {
+      try { await unsubscribeTokenFromTopic(token, 'all'); }
+      catch (e) { console.error('[fcm] unsubscribe failed:', (e as Error).message); }
+    }
+    return ok(res, {}, 'Token removed');
   } catch (e: any) { return serverError(res, e.message); }
 });
 

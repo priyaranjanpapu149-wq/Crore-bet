@@ -1,4 +1,5 @@
 import prisma from '../config/db';
+import { Prisma } from '@prisma/client';
 import { todayIST } from '../utils/dateIST';
 import { sendToTopic, sendToUser } from './fcm.service';
 
@@ -346,14 +347,16 @@ function assertBidEligible(params: {
 // ============================================================
 // PLACE BID
 // ============================================================
-export async function placeBid(params: {
+type BidParams = {
   userId: string;
   marketId: string;
   gameType: string;
   session?: string;
   digits: string;
   amount: number;
-}) {
+};
+
+async function placeBidInTransaction(tx: Prisma.TransactionClient, params: BidParams) {
   const { userId, marketId, gameType, session, digits, amount } = params;
 
   if (!validateDigits(gameType, digits)) throw new Error('Invalid digits for ' + gameType);
@@ -375,7 +378,8 @@ export async function placeBid(params: {
     ? null
     : (session || null);
 
-  const placed = await prisma.$transaction(async (tx) => {
+
+
     const user = await tx.user.findUnique({ where: { id: userId } });
     if (!user || !user.active) throw new Error('User not active');
     if (Number(user.wallet) < amount) throw new Error('Insufficient balance');
@@ -501,16 +505,37 @@ export async function placeBid(params: {
     });
 
     return { bid, mobile: user.mobile };
-  });
+}
 
-  try {
-    const { checkEligibility } = await import('./referral.service');
-    await checkEligibility(placed.mobile);
-  } catch (e) {
-    console.error('[referral:eligibility]', (e as Error).message);
+export async function placeBids(params: Omit<BidParams, 'digits' | 'amount'> & {
+  bids: Array<{ digits: string; amount: number }>;
+}) {
+  if (params.bids.length === 0 || params.bids.length > 500) {
+    throw new Error('A batch must contain between 1 and 500 bids');
   }
+  const placed = await prisma.$transaction(async (tx) => {
+    const items = [];
+    for (const item of params.bids) {
+      items.push(await placeBidInTransaction(tx, { ...params, ...item }));
+    }
+    const user = await tx.user.findUniqueOrThrow({ where: { id: params.userId }, select: { wallet: true } });
+    return { items, wallet: Number(user.wallet) };
+  }, { timeout: 15000 });
 
-  return placed.bid;
+  void import('./referral.service.js')
+    .then(({ checkEligibility }) => checkEligibility(placed.items[0].mobile))
+    .catch((e) => console.error('[referral:eligibility]', (e as Error).message));
+  void sendToUser(params.userId, 'Bid placed',
+    'Placed ' + placed.items.length + ' bid(s) successfully',
+    { type: 'bid_placed', marketId: params.marketId },
+  ).catch((e) => console.error('[fcm] bid notification failed:', e?.message));
+
+  return { bids: placed.items.map(item => item.bid), wallet: placed.wallet };
+}
+
+export async function placeBid(params: BidParams) {
+  const result = await placeBids({ ...params, bids: [{ digits: params.digits, amount: params.amount }] });
+  return result.bids[0];
 }
 
 // ============================================================
@@ -630,8 +655,10 @@ export async function declareResult(params: {
     gameType: string;
     digits: string;
   }> = [];
+  const lossesToNotify = new Map<string, number>();
 
   const outcome = await prisma.$transaction(async (tx) => {
+    await tx.$queryRaw`SELECT id FROM markets WHERE id = ${params.marketId} FOR UPDATE`;
     const market = await tx.market.findUnique({ where: { id: params.marketId } });
     if (!market) throw new Error('Market not found');
 
@@ -763,6 +790,7 @@ export async function declareResult(params: {
         });
       } else {
         await tx.bid.update({ where: { id: bid.id }, data: { status: 'lost' } });
+        lossesToNotify.set(bid.userId, (lossesToNotify.get(bid.userId) ?? 0) + 1);
       }
     }
 
@@ -815,6 +843,16 @@ export async function declareResult(params: {
       console.log(`[fcm] win notification sent to ${w.userId}`);
     } catch (e: any) {
       console.error(`[fcm] win notification failed for ${w.userId}:`, e?.message);
+    }
+  }
+
+  for (const [userId, count] of lossesToNotify) {
+    try {
+      await sendToUser(userId, 'Bid result', `${outcome.marketName}: ${count} bid(s) did not win`, {
+        type: 'loss', marketId: params.marketId, session: params.session,
+      });
+    } catch (e: any) {
+      console.error(`[fcm] loss notification failed for ${userId}:`, e?.message);
     }
   }
 

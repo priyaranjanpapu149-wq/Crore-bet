@@ -141,7 +141,7 @@ class _BankDetailsScreenState extends State<BankDetailsScreen> {
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(msg),
-      backgroundColor: const Color(0xFF25456F),
+      backgroundColor: const Color(0xFF146043),
       behavior: SnackBarBehavior.floating,
       duration: const Duration(seconds: 3),
     ));
@@ -161,7 +161,7 @@ class _BankDetailsScreenState extends State<BankDetailsScreen> {
                 child: _loading
                     ? const Center(
                   child: CircularProgressIndicator(
-                      color: Color(0xFF5EA8F5)),
+                      color: Color(0xFFD6AA41)),
                 )
                     : SingleChildScrollView(
                   padding:
@@ -253,7 +253,7 @@ class _BankDetailsScreenState extends State<BankDetailsScreen> {
                 boxShadow: selected
                     ? [
                   BoxShadow(
-                    color: const Color(0xFF70B6FF)
+                    color: const Color(0xFFE2BC62)
                         .withValues(alpha: 0.55),
                     blurRadius: 14,
                     spreadRadius: 1,
@@ -261,7 +261,7 @@ class _BankDetailsScreenState extends State<BankDetailsScreen> {
                 ]
                     : [
                   BoxShadow(
-                    color: const Color(0xFF5EA8F5)
+                    color: const Color(0xFFD6AA41)
                         .withValues(alpha: 0.18),
                     blurRadius: 6,
                   ),
@@ -277,16 +277,16 @@ class _BankDetailsScreenState extends State<BankDetailsScreen> {
                           gradient: selected
                               ? const LinearGradient(
                             colors: [
-                              Color(0xFF284D7E),
-                              Color(0xFF5EA8F5),
+                              Color(0xFF176C4B),
+                              Color(0xFFD6AA41),
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
                           )
                               : const LinearGradient(
                             colors: [
-                              Color(0xFF14284A),
-                              Color(0xFF284D7E),
+                              Color(0xFF084A35),
+                              Color(0xFF176C4B),
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
@@ -300,7 +300,7 @@ class _BankDetailsScreenState extends State<BankDetailsScreen> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(22),
                             border: Border.all(
-                              color: const Color(0xFF5EA8F5),
+                              color: const Color(0xFFD6AA41),
                               width: selected ? 1.8 : 1.2,
                             ),
                           ),
@@ -443,7 +443,7 @@ class _BankDetailsScreenState extends State<BankDetailsScreen> {
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF5EA8F5).withValues(alpha: 0.18),
+                color: const Color(0xFFD6AA41).withValues(alpha: 0.18),
                 blurRadius: 12,
                 spreadRadius: 1,
               ),
@@ -457,7 +457,7 @@ class _BankDetailsScreenState extends State<BankDetailsScreen> {
                   child: Container(
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [Color(0xFF14284A), Color(0xFF284D7E)],
+                        colors: [Color(0xFF084A35), Color(0xFF176C4B)],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
@@ -470,7 +470,7 @@ class _BankDetailsScreenState extends State<BankDetailsScreen> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: const Color(0xFF5EA8F5),
+                          color: const Color(0xFFD6AA41),
                           width: 1.4,
                         ),
                       ),
@@ -493,7 +493,7 @@ class _BankDetailsScreenState extends State<BankDetailsScreen> {
                     decoration: InputDecoration(
                       hintText: hint,
                       hintStyle: GoogleFonts.lato(
-                        color: const Color(0xFFB6C9E2),
+                        color: const Color(0xFFE5D6B7),
                         fontSize: 13.5,
                         fontWeight: FontWeight.w500,
                       ),
@@ -523,12 +523,12 @@ class _BankDetailsScreenState extends State<BankDetailsScreen> {
           borderRadius: BorderRadius.circular(14),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFF70B6FF).withValues(alpha: 0.55),
+              color: const Color(0xFFE2BC62).withValues(alpha: 0.55),
               blurRadius: 18,
               spreadRadius: 2,
             ),
             BoxShadow(
-              color: const Color(0xFF5EA8F5).withValues(alpha: 0.25),
+              color: const Color(0xFFD6AA41).withValues(alpha: 0.25),
               blurRadius: 28,
               spreadRadius: 4,
             ),
@@ -542,7 +542,7 @@ class _BankDetailsScreenState extends State<BankDetailsScreen> {
                 child: Container(
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Color(0xFF284D7E), Color(0xFF5EA8F5)],
+                      colors: [Color(0xFF176C4B), Color(0xFFD6AA41)],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
@@ -654,7 +654,7 @@ class _BankDetailsScreenState extends State<BankDetailsScreen> {
               child: Container(
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Color(0xFF14284A), Color(0xFF284D7E)],
+                    colors: [Color(0xFF084A35), Color(0xFF176C4B)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -729,7 +729,7 @@ class _BankDetailsScreenState extends State<BankDetailsScreen> {
                           child: Text(
                             r.key,
                             style: GoogleFonts.lato(
-                              color: const Color(0xFFE9F1FF),
+                              color: const Color(0xFFFFF8EB),
                               fontSize: 12,
                               fontWeight: FontWeight.w600,
                             ),

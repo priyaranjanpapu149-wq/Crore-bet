@@ -175,10 +175,11 @@ class _OtpScreenState extends State<OtpScreen> {
     if (!_canResend) return;
     final auth = context.read<AuthProvider>();
     String? newOtp;
+    var sent = false;
     if (widget.mode == OtpMode.signup) {
       newOtp = await auth.sendSignupOtp(widget.mobile);
     } else if (widget.mode == OtpMode.forgot) {
-      newOtp = await auth.forgotSendOtp(widget.mobile);
+      sent = await auth.forgotSendOtp(widget.mobile);
     } else if (widget.mode == OtpMode.login) {
       if (widget.pendingPassword == null || widget.pendingPassword!.isEmpty) {
         _showSnack('resend_requires_password'.tr(), isError: true);
@@ -187,9 +188,9 @@ class _OtpScreenState extends State<OtpScreen> {
       newOtp = await auth.loginSendOtp(widget.mobile, widget.pendingPassword!);
     }
     if (!mounted) return;
-    if (newOtp != null && newOtp.isNotEmpty) {
+    if (sent || (newOtp != null && newOtp.isNotEmpty)) {
       _clearAll();
-      _autoFillOtp(newOtp);
+      if (newOtp != null && newOtp.isNotEmpty) _autoFillOtp(newOtp);
       _startResendTimer();
       _showSnack(
         'otp_resent_to'.tr(namedArgs: {'mobile': widget.mobile}),
@@ -279,7 +280,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             child: Text(
                               'enter_6digit_code_sent_to'.tr(),
                               style: GoogleFonts.lato(
-                                color: const Color(0xFFE9F1FF),
+                                color: const Color(0xFFFFF8EB),
                                 fontSize: w < 360 ? 11 : 12.5,
                                 fontWeight: FontWeight.w500,
                               ),
@@ -352,7 +353,7 @@ class _OtpScreenState extends State<OtpScreen> {
                                 'seconds': '$_resendSeconds',
                               }),
                               style: GoogleFonts.lato(
-                                color: const Color(0xFFB6C9E2),
+                                color: const Color(0xFFE5D6B7),
                                 fontSize: 12.5,
                                 fontWeight: FontWeight.w500,
                               ),

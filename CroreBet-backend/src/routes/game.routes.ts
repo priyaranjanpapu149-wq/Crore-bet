@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import prisma from '../config/db';
 import { requireUser } from '../middleware/auth';
-import { placeBid, isValidGameType } from '../services/game.service';
+import { placeBid, placeBids, isValidGameType } from '../services/game.service';
 import { ok, badRequest, serverError, notFound } from '../utils/response';
 
 const router = Router();
@@ -109,6 +109,25 @@ router.get('/charts', async (req, res) => {
 //      • Open time passed + jodi/half_sangam_a/full_sangam → blocked
 //    Removing the market-level lock so CLOSE bids work even
 //    after OPEN result is declared.
+router.post('/bid/batch', requireUser, async (req, res) => {
+  try {
+    const { marketId, gameType, session, bids } = req.body;
+    if (typeof marketId !== 'string' || !marketId || typeof gameType !== 'string' || !isValidGameType(gameType)) {
+      return badRequest(res, 'Invalid market or game type');
+    }
+    if (session && !['open', 'close'].includes(session)) return badRequest(res, 'Invalid session');
+    if (!Array.isArray(bids) || bids.length === 0 || bids.length > 500) return badRequest(res, 'A batch must contain between 1 and 500 bids');
+    const normalized = bids.map((bid: any) => ({ digits: String(bid?.digits ?? ''), amount: Number(bid?.amount) }));
+    if (normalized.some((bid: { digits: string; amount: number }) => !bid.digits || bid.digits.length > 20 || !Number.isFinite(bid.amount) || bid.amount <= 0)) {
+      return badRequest(res, 'Invalid digits or amount');
+    }
+    const result = await placeBids({ userId: req.user!.sub, marketId, gameType, session, bids: normalized });
+    return ok(res, { bidIds: result.bids.map(bid => bid.id), wallet: result.wallet }, 'Bids placed');
+  } catch (e: any) {
+    return badRequest(res, e.message);
+  }
+});
+
 router.post('/bid', requireUser, async (req, res) => {
   try {
     const { marketId, gameType, session, digits, amount } = req.body;

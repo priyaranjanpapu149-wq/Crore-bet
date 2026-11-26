@@ -3,3 +3,5 @@ node_modules/
 .env.*
 !.env.example
 CroreBet-backend/firebase-service-account.json
+CroreBet-backend/dist/
+CroreBet-admin/dist/

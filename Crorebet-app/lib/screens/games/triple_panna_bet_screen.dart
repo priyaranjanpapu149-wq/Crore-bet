@@ -265,7 +265,7 @@ class _TriplePannaBetScreenState extends State<TriplePannaBetScreen> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           gradient: const LinearGradient(
-            colors: [Color(0xFF14284A), Color(0xFF284D7E)],
+            colors: [Color(0xFF084A35), Color(0xFF176C4B)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -319,7 +319,7 @@ class _TriplePannaBetScreenState extends State<TriplePannaBetScreen> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         gradient: const LinearGradient(
-          colors: [Color(0xFF14284A), Color(0xFF284D7E)],
+          colors: [Color(0xFF084A35), Color(0xFF176C4B)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -362,7 +362,7 @@ class _TriplePannaBetScreenState extends State<TriplePannaBetScreen> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF5EA8F5).withValues(alpha: 0.20),
+            color: const Color(0xFFD6AA41).withValues(alpha: 0.20),
             blurRadius: 12,
             spreadRadius: 1,
           ),
@@ -376,7 +376,7 @@ class _TriplePannaBetScreenState extends State<TriplePannaBetScreen> {
               child: Container(
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Color(0xFF14284A), Color(0xFF284D7E)],
+                    colors: [Color(0xFF084A35), Color(0xFF176C4B)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -389,7 +389,7 @@ class _TriplePannaBetScreenState extends State<TriplePannaBetScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
-                        color: const Color(0xFF5EA8F5), width: 1.4),
+                        color: const Color(0xFFD6AA41), width: 1.4),
                   ),
                 ),
               ),
@@ -412,14 +412,14 @@ class _TriplePannaBetScreenState extends State<TriplePannaBetScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
-                      color: const Color(0xFF14284A),
+                      color: const Color(0xFF084A35),
                       border: Border.all(
-                          color: const Color(0xFF5EA8F5), width: 1.2),
+                          color: const Color(0xFFD6AA41), width: 1.2),
                     ),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
                         value: _session,
-                        dropdownColor: const Color(0xFF14284A),
+                        dropdownColor: const Color(0xFF084A35),
                         icon: const Icon(
                             Icons.keyboard_arrow_down_rounded,
                             color: Color(0xFFF5F8FF),
@@ -477,7 +477,7 @@ class _TriplePannaBetScreenState extends State<TriplePannaBetScreen> {
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF5EA8F5).withValues(alpha: 0.20),
+            color: const Color(0xFFD6AA41).withValues(alpha: 0.20),
             blurRadius: 8,
             spreadRadius: 1,
           ),
@@ -491,7 +491,7 @@ class _TriplePannaBetScreenState extends State<TriplePannaBetScreen> {
               child: Container(
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Color(0xFF14284A), Color(0xFF284D7E)],
+                    colors: [Color(0xFF084A35), Color(0xFF176C4B)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -504,7 +504,7 @@ class _TriplePannaBetScreenState extends State<TriplePannaBetScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
-                        color: const Color(0xFF5EA8F5), width: 1.2),
+                        color: const Color(0xFFD6AA41), width: 1.2),
                   ),
                 ),
               ),
@@ -518,7 +518,7 @@ class _TriplePannaBetScreenState extends State<TriplePannaBetScreen> {
                     borderRadius: BorderRadius.horizontal(
                         left: Radius.circular(9)),
                     gradient: LinearGradient(
-                      colors: [Color(0xFF284D7E), Color(0xFF5EA8F5)],
+                      colors: [Color(0xFF176C4B), Color(0xFFD6AA41)],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
@@ -550,7 +550,7 @@ class _TriplePannaBetScreenState extends State<TriplePannaBetScreen> {
                     decoration: InputDecoration(
                       hintText: 'amount'.tr(),
                       hintStyle: GoogleFonts.lato(
-                        color: const Color(0xFFB6C9E2),
+                        color: const Color(0xFFE5D6B7),
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                       ),
@@ -578,12 +578,12 @@ class _TriplePannaBetScreenState extends State<TriplePannaBetScreen> {
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF5EA8F5).withValues(alpha: 0.30),
+            color: const Color(0xFFD6AA41).withValues(alpha: 0.30),
             blurRadius: 14,
             spreadRadius: 1,
           ),
           BoxShadow(
-            color: const Color(0xFF5EA8F5).withValues(alpha: 0.15),
+            color: const Color(0xFFD6AA41).withValues(alpha: 0.15),
             blurRadius: 24,
             spreadRadius: 2,
           ),
@@ -597,7 +597,7 @@ class _TriplePannaBetScreenState extends State<TriplePannaBetScreen> {
               child: Container(
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Color(0xFF14284A), Color(0xFF284D7E)],
+                    colors: [Color(0xFF084A35), Color(0xFF176C4B)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -610,7 +610,7 @@ class _TriplePannaBetScreenState extends State<TriplePannaBetScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
-                        color: const Color(0xFF5EA8F5), width: 1.6),
+                        color: const Color(0xFFD6AA41), width: 1.6),
                   ),
                 ),
               ),
@@ -666,12 +666,12 @@ class _TriplePannaBetScreenState extends State<TriplePannaBetScreen> {
           borderRadius: BorderRadius.circular(30),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFF5EA8F5).withValues(alpha: 0.55),
+              color: const Color(0xFFD6AA41).withValues(alpha: 0.55),
               blurRadius: 18,
               spreadRadius: 2,
             ),
             BoxShadow(
-              color: const Color(0xFF5EA8F5).withValues(alpha: 0.25),
+              color: const Color(0xFFD6AA41).withValues(alpha: 0.25),
               blurRadius: 28,
               spreadRadius: 4,
             ),
@@ -685,7 +685,7 @@ class _TriplePannaBetScreenState extends State<TriplePannaBetScreen> {
                 child: Container(
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [Color(0xFF284D7E), Color(0xFF5EA8F5)],
+                      colors: [Color(0xFF176C4B), Color(0xFFD6AA41)],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
@@ -757,7 +757,7 @@ class _TriplePannaBetScreenState extends State<TriplePannaBetScreen> {
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF5EA8F5).withValues(alpha: 0.35),
+                color: const Color(0xFFD6AA41).withValues(alpha: 0.35),
                 blurRadius: 28,
                 spreadRadius: 3,
               ),
@@ -772,9 +772,9 @@ class _TriplePannaBetScreenState extends State<TriplePannaBetScreen> {
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          Color(0xFF14284A),
-                          Color(0xFF1C3459),
-                          Color(0xFF284D7E),
+                          Color(0xFF084A35),
+                          Color(0xFF0A4A35),
+                          Color(0xFF176C4B),
                         ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
@@ -788,7 +788,7 @@ class _TriplePannaBetScreenState extends State<TriplePannaBetScreen> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color: const Color(0xFF5EA8F5),
+                          color: const Color(0xFFD6AA41),
                           width: 1.8,
                         ),
                       ),
@@ -804,8 +804,8 @@ class _TriplePannaBetScreenState extends State<TriplePannaBetScreen> {
                       decoration: const BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            Color(0xFF284D7E),
-                            Color(0xFF5EA8F5)
+                            Color(0xFF176C4B),
+                            Color(0xFFD6AA41)
                           ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
@@ -895,7 +895,7 @@ class _TriplePannaBetScreenState extends State<TriplePannaBetScreen> {
                         'note_bid_cancelled'.tr(),
                         textAlign: TextAlign.center,
                         style: GoogleFonts.lato(
-                          color: const Color(0xFFB6C9E2),
+                          color: const Color(0xFFE5D6B7),
                           fontSize: 11,
                           fontStyle: FontStyle.italic,
                         ),
@@ -914,7 +914,7 @@ class _TriplePannaBetScreenState extends State<TriplePannaBetScreen> {
                                     Navigator.pop(context, false),
                                 style: OutlinedButton.styleFrom(
                                   side: const BorderSide(
-                                      color: Color(0xFF5EA8F5), width: 1.6),
+                                      color: Color(0xFFD6AA41), width: 1.6),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),
@@ -939,13 +939,13 @@ class _TriplePannaBetScreenState extends State<TriplePannaBetScreen> {
                                     Navigator.pop(context, true),
                                 style: OutlinedButton.styleFrom(
                                   backgroundColor:
-                                  const Color(0xFF284D7E),
+                                  const Color(0xFF176C4B),
                                   side: const BorderSide(
-                                      color: Color(0xFF5EA8F5), width: 1.6),
+                                      color: Color(0xFFD6AA41), width: 1.6),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10),
                                   ),
-                                  shadowColor: const Color(0xFF70B6FF),
+                                  shadowColor: const Color(0xFFE2BC62),
                                   elevation: 2,
                                 ),
                                 child: Text(
@@ -989,12 +989,12 @@ class _TriplePannaBetScreenState extends State<TriplePannaBetScreen> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
         gradient: const LinearGradient(
-          colors: [Color(0xFF14284A), Color(0xFF284D7E)],
+          colors: [Color(0xFF084A35), Color(0xFF176C4B)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         border: Border.all(
-          color: const Color(0xFF5EA8F5),
+          color: const Color(0xFFD6AA41),
           width: 1,
         ),
       ),
@@ -1029,7 +1029,7 @@ class _TriplePannaBetScreenState extends State<TriplePannaBetScreen> {
               child: Text(
                 type,
                 style: GoogleFonts.lato(
-                  color: const Color(0xFFE9F1FF),
+                  color: const Color(0xFFFFF8EB),
                   fontSize: 11.5,
                   fontWeight: FontWeight.w700,
                 ),
@@ -1048,7 +1048,7 @@ class _TriplePannaBetScreenState extends State<TriplePannaBetScreen> {
         Text(
           label,
           style: GoogleFonts.lato(
-            color: const Color(0xFFE9F1FF),
+            color: const Color(0xFFFFF8EB),
             fontSize: 11,
             fontWeight: FontWeight.w700,
           ),
@@ -1081,7 +1081,7 @@ class _TriplePannaBetScreenState extends State<TriplePannaBetScreen> {
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFF5EA8F5).withValues(alpha: 0.35),
+                color: const Color(0xFFD6AA41).withValues(alpha: 0.35),
                 blurRadius: 28,
                 spreadRadius: 3,
               ),
@@ -1096,9 +1096,9 @@ class _TriplePannaBetScreenState extends State<TriplePannaBetScreen> {
                     decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          Color(0xFF14284A),
-                          Color(0xFF1C3459),
-                          Color(0xFF284D7E),
+                          Color(0xFF084A35),
+                          Color(0xFF0A4A35),
+                          Color(0xFF176C4B),
                         ],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
@@ -1112,7 +1112,7 @@ class _TriplePannaBetScreenState extends State<TriplePannaBetScreen> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
-                          color: const Color(0xFF5EA8F5),
+                          color: const Color(0xFFD6AA41),
                           width: 1.8,
                         ),
                       ),
@@ -1159,9 +1159,9 @@ class _TriplePannaBetScreenState extends State<TriplePannaBetScreen> {
                         child: OutlinedButton(
                           onPressed: () => Navigator.pop(context),
                           style: OutlinedButton.styleFrom(
-                            backgroundColor: const Color(0xFF284D7E),
+                            backgroundColor: const Color(0xFF176C4B),
                             side: const BorderSide(
-                                color: Color(0xFF5EA8F5), width: 1.6),
+                                color: Color(0xFFD6AA41), width: 1.6),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),

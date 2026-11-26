@@ -7,8 +7,10 @@ import adminRoutes from './routes/admin.routes';
 import referralRoutes from './routes/referral.routes';
 import publicRoutes from './routes/public.routes';
 import uploadRoutes from './routes/upload.routes';
+import supportRoutes from './routes/support.routes';
 
 const router = Router();
+router.use('/support', supportRoutes);
 
 router.use('/public', publicRoutes);
 router.use('/auth', authRoutes);

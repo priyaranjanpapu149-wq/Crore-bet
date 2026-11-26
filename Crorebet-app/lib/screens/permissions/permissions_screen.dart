@@ -60,7 +60,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
     showDialog<void>(
       context: context,
       builder: (_) => Dialog(
-        backgroundColor: const Color(0xFF1C3459),
+        backgroundColor: const Color(0xFF0A4A35),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
           side: const BorderSide(color: AppColors.flameBorder, width: 1.4),
@@ -89,7 +89,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                 message,
                 textAlign: TextAlign.center,
                 style: GoogleFonts.lato(
-                  color: const Color(0xFFE9F1FF),
+                  color: const Color(0xFFFFF8EB),
                   fontSize: 13,
                   height: 1.5,
                 ),
@@ -131,7 +131,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                           openAppSettings();
                         },
                         style: OutlinedButton.styleFrom(
-                          backgroundColor: const Color(0xFF25456F),
+                          backgroundColor: const Color(0xFF146043),
                           side: const BorderSide(
                               color: AppColors.flameBorder, width: 1.5),
                           shape: RoundedRectangleBorder(
@@ -169,14 +169,14 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
             children: [
               const Spacer(flex: 2),
 
-              // ─── LOTUS LOGO ─────────────────────────────
+              // ─── PERMISSIONS ICON ───────────────────────
               Center(
                 child: Container(
                   width: 140,
                   height: 140,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: const Color(0xFF25456F),
+                    color: const Color(0xFF146043),
                     border: FlameBorder(width: 2),
                     boxShadow: [
                       BoxShadow(
@@ -186,17 +186,10 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                       ),
                     ],
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(18),
-                    child: Image.asset(
-                      'assets/images/lotus.png',
-                      fit: BoxFit.contain,
-                      errorBuilder: (_, __, ___) => const Icon(
-                        Icons.spa_rounded,
-                        color: Color(0xFFF5F8FF),
-                        size: 70,
-                      ),
-                    ),
+                  child: const Icon(
+                    Icons.shield_outlined,
+                    color: Color(0xFFF5F8FF),
+                    size: 70,
                   ),
                 ),
               ),
@@ -225,7 +218,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                   'grant_following_to_continue'.tr(),
                   textAlign: TextAlign.center,
                   style: GoogleFonts.lato(
-                    color: const Color(0xFFE9F1FF),
+                    color: const Color(0xFFFFF8EB),
                     fontSize: 12.5,
                   ),
                 ),
@@ -260,7 +253,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                   child: OutlinedButton(
                     onPressed: _busy ? null : _requestAll,
                     style: OutlinedButton.styleFrom(
-                      backgroundColor: const Color(0xFF25456F),
+                      backgroundColor: const Color(0xFF146043),
                       side: const BorderSide(
                           color: AppColors.flameBorder, width: 1.8),
                       shape: RoundedRectangleBorder(
@@ -309,7 +302,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(14),
         gradient: const LinearGradient(
-          colors: [Color(0xFF1C3459), Color(0xFF1C3459)],
+          colors: [Color(0xFF0A4A35), Color(0xFF0A4A35)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -370,7 +363,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                 Text(
                   description,
                   style: GoogleFonts.lato(
-                    color: const Color(0xFFE9F1FF),
+                    color: const Color(0xFFFFF8EB),
                     fontSize: 12.5,
                     height: 1.45,
                   ),

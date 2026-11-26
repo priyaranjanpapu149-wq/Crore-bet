@@ -17,6 +17,7 @@ const BONUS_EXCLUDE_REMARKS =
   /refund|reversal|reverse|correction|cashback|win payout|withdrawal|bonus/i;
 
 export async function updateWallet(change: WalletChange) {
+  if (!Number.isFinite(change.amount) || change.amount <= 0) throw new Error('Invalid amount');
   const result = await prisma.$transaction(async (tx) => {
     const user = await tx.user.findUnique({
       where: { id: change.userId },
@@ -24,15 +25,14 @@ export async function updateWallet(change: WalletChange) {
     });
     if (!user) throw new Error('User not found');
 
-    const before = Number(user.wallet);
     const delta = change.type === 1 ? change.amount : -change.amount;
-    const after = before + delta;
-    if (after < 0) throw new Error('Insufficient balance');
-
-    await tx.user.update({
+    const updated = await tx.user.update({
       where: { id: change.userId },
-      data: { wallet: after },
+      data: { wallet: { increment: delta } },
     });
+    const after = Number(updated.wallet);
+    if (after < 0) throw new Error('Insufficient balance');
+    const before = after - delta;
 
     const txn = await tx.transaction.create({
       data: {
@@ -50,29 +50,22 @@ export async function updateWallet(change: WalletChange) {
     return { before, after, txn, userMobile: user.mobile };
   });
 
-  // 🚀 SEND PUSH NOTIFICATION (Wallet Added / Deducted)
-  try {
-    const isCredit = change.type === 1;
-    
-    // Check if it's a winning payout to customize the message
-    const isWin = change.remark.toLowerCase().includes('win payout');
-    
-    let title = isCredit ? 'Wallet Credited 💰' : 'Wallet Debited 💸';
-    if (isWin) title = 'Congratulations! You Won 🎉';
+  // Send after the wallet transaction commits; a push failure must not retry the credit.
+  const isCredit = change.type === 1;
+  const isWin = change.remark.toLowerCase().includes('win payout');
+  let title = isCredit ? 'Wallet Credited 💰' : 'Wallet Debited 💸';
+  if (isWin) title = 'Congratulations! You Won 🎉';
 
-    const body = isCredit 
-      ? `₹${change.amount} added. Reason: ${change.remark}` 
-      : `₹${change.amount} deducted. Reason: ${change.remark}`;
+  const body = isCredit
+    ? `₹${change.amount} added to your wallet. New balance: ₹${result.after}`
+    : `₹${change.amount} deducted from your wallet. New balance: ₹${result.after}`;
 
-    await sendToUser(
-      change.userId,
-      title,
-      body,
-      { type: 'wallet' } // 🚀 Pass 'wallet' so the app knows how to handle it
-    );
-  } catch (fcmErr) {
-    console.error('[fcm:wallet-notification]', fcmErr);
-  }
+  void sendToUser(
+    change.userId,
+    title,
+    body,
+    { type: 'wallet', amount: String(change.amount) }
+  ).catch((error) => console.error('[fcm:wallet-notification]', error));
 
   // Trigger referral on genuine deposit credits only
   const isDepositCredit =
@@ -82,7 +75,7 @@ export async function updateWallet(change: WalletChange) {
 
   if (isDepositCredit) {
     try {
-      const { recordDeposit } = await import('./referral.service');
+      const { recordDeposit } = await import('./referral.service.js');
       await recordDeposit({
         userId: change.userId,
         mobile: result.userMobile,

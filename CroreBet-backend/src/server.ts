@@ -24,6 +24,11 @@ const allowedOrigins = process.env.NODE_ENV === 'production'
       'https://www.Crorebet.cc',
       'https://web.Crorebet.cc',
       'https://admin.Crorebet.cc',
+      'https://crorebetapp.com',
+      'https://www.crorebetapp.com',
+      'https://web.crorebetapp.com',
+      'https://admin.crorebetapp.com',
+      ...(process.env.CORS_ORIGINS || '').split(',').map(origin => origin.trim()).filter(Boolean),
     ]
   : true;
 

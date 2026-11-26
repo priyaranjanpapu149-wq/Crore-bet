@@ -30,7 +30,7 @@ Future<void> main() async {
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.light,
       statusBarBrightness: Brightness.dark,
-      systemNavigationBarColor: Color(0xFF0B1933),
+      systemNavigationBarColor: Color(0xFF043B2A),
       systemNavigationBarIconBrightness: Brightness.light,
     ),
   );
@@ -94,8 +94,8 @@ class CrorebetApp extends StatelessWidget {
 
         theme: AppTheme.dark.copyWith(
           scaffoldBackgroundColor: Colors.transparent,
-          canvasColor: const Color(0xFF0B1933),
-          cardColor: const Color(0xFF172F55),
+          canvasColor: const Color(0xFF043B2A),
+          cardColor: const Color(0xFF0A5139),
           appBarTheme: AppTheme.dark.appBarTheme.copyWith(
             backgroundColor: Colors.transparent,
             surfaceTintColor: Colors.transparent,

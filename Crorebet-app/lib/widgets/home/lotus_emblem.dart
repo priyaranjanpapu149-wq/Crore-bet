@@ -73,7 +73,7 @@ class _LotusPainter extends CustomPainter {
     canvas.drawCircle(
       Offset(cx, baseY - size.height * 0.42),
       size.width * 0.045,
-      Paint()..color = const Color(0xFF25456F),
+      Paint()..color = const Color(0xFF146043),
     );
   }
 

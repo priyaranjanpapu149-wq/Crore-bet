@@ -56,7 +56,7 @@ async function touchUserSession(userId: string, req: any) {
 }
 
 function generateReferCode(mobile: string): string {
-  return 'SHV' + mobile.slice(-6) + crypto.randomInt(10, 99);
+  return 'CB' + mobile.slice(-6) + crypto.randomInt(10, 99);
 }
 
 function issueAccessToken(user: { id: string; mobile: string }) {
@@ -188,14 +188,12 @@ router.post('/signup/send-otp', otpLimiter, async (req, res) => {
 // SIGNUP — Verify OTP + Create Account + Issue Tokens
 // 🚀 STRICT VALIDATION — rejects anything invalid, no silent strip
 // ═══════════════════════════════════════════════════════════
-router.post('/signup/verify-otp', verifyLimiter, async (req, res) => {
+router.post(['/signup/verify-otp', '/signup/direct'], verifyLimiter, async (req, res) => {
   try {
+    const requiresOtp = req.path.toLowerCase().replace(/\/+$/, '') !== '/signup/direct';
     // 🚀 STRICT WHITELIST VALIDATION
     const mobileCheck = isValidMobile(req.body.mobile);
     if (!mobileCheck.ok) return badRequest(res, mobileCheck.msg!);
-
-    const codeCheck = isValidOtp(req.body.code);
-    if (!codeCheck.ok) return badRequest(res, codeCheck.msg!);
 
     const nameCheck = isValidName(req.body.name);
     if (!nameCheck.ok) return badRequest(res, nameCheck.msg!);
@@ -207,22 +205,24 @@ router.post('/signup/verify-otp', verifyLimiter, async (req, res) => {
     if (!referCheck.ok) return badRequest(res, referCheck.msg!);
 
     const mobile = mobileCheck.value;
-    const code = codeCheck.value;
     const name = nameCheck.value;
     const password = pwCheck.value;
     const referCode = referCheck.value;
 
-    const session = await prisma.otpSession.findFirst({
-      where: { mobile, purpose: 'signup', used: false },
-      orderBy: { createdAt: 'desc' },
-    });
-    if (!session) return badRequest(res, 'No OTP requested');
-    if (session.expiresAt < new Date()) return badRequest(res, 'OTP expired');
-    if (session.attempts >= 10) return badRequest(res, 'Too many attempts'); // 🚀 Changed to 10
+    if (requiresOtp) {
+      const codeCheck = isValidOtp(req.body.code);
+      if (!codeCheck.ok) return badRequest(res, codeCheck.msg!);
+      const session = await prisma.otpSession.findFirst({
+        where: { mobile, purpose: 'signup', used: false },
+        orderBy: { createdAt: 'desc' },
+      });
+      if (!session) return badRequest(res, 'No OTP requested');
+      if (session.expiresAt < new Date()) return badRequest(res, 'OTP expired');
+      if (session.attempts >= 10) return badRequest(res, 'Too many attempts');
 
-    const result = await validateOtp(session.verificationId, code);
-    const okRes = await handleOtpResult(result, session, res);
-    if (!okRes) return;
+      const result = await validateOtp(session.verificationId, codeCheck.value);
+      if (!await handleOtpResult(result, session, res)) return;
+    }
 
     const existing = await prisma.user.findUnique({ where: { mobile } });
     if (existing) return badRequest(res, 'Mobile already registered');
@@ -256,7 +256,7 @@ router.post('/signup/verify-otp', verifyLimiter, async (req, res) => {
         mobile,
         name,
         passwordHash,
-        verified: true,
+        verified: requiresOtp,
         referCode: generateReferCode(mobile),
         referredBy: validRefer,
         lastDeviceId: deviceId || null,
@@ -267,7 +267,7 @@ router.post('/signup/verify-otp', verifyLimiter, async (req, res) => {
 
     if (validRefer && referrerMobile) {
       try {
-        const { createReferral } = await import('../services/referral.service');
+        const { createReferral } = await import('../services/referral.service.js');
         await createReferral({
           referrerMobile,
           refereeMobile: mobile,

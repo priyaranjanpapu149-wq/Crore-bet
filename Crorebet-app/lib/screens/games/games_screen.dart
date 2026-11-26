@@ -151,7 +151,7 @@ class _GamesScreenState extends State<GamesScreen> {
     showDialog<void>(
       context: context,
       builder: (_) => Dialog(
-        backgroundColor: const Color(0xFF1C3459),
+        backgroundColor: const Color(0xFF0A4A35),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
           side: const BorderSide(color: const Color(0xFFF5F8FF), width: 1.4),
@@ -167,7 +167,7 @@ class _GamesScreenState extends State<GamesScreen> {
                 height: 76,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: const Color(0xFF1C3459),
+                  color: const Color(0xFF0A4A35),
                   border: Border.all(color: const Color(0xFFE74C3C), width: 1.6),
                 ),
                 child: const Icon(Icons.lock_clock_rounded, color: Color(0xFFE74C3C), size: 38),
@@ -188,7 +188,7 @@ class _GamesScreenState extends State<GamesScreen> {
                 reason,
                 textAlign: TextAlign.center,
                 style: GoogleFonts.lato(
-                  color: const Color(0xFFE9F1FF),
+                  color: const Color(0xFFFFF8EB),
                   fontSize: 13.5,
                   height: 1.45,
                   fontWeight: FontWeight.w500,
@@ -201,7 +201,7 @@ class _GamesScreenState extends State<GamesScreen> {
                 child: OutlinedButton(
                   onPressed: () => Navigator.pop(context),
                   style: OutlinedButton.styleFrom(
-                    backgroundColor: const Color(0xFF1C3459),
+                    backgroundColor: const Color(0xFF0A4A35),
                     side: const BorderSide(color: const Color(0xFFF5F8FF), width: 1.4),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                   ),
@@ -273,7 +273,7 @@ class _GamesScreenState extends State<GamesScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: const Color(0xFF1C3459),
+          color: const Color(0xFF0A4A35),
           border: Border.all(color: const Color(0xFFE74C3C), width: 1.2),
         ),
         child: Row(
@@ -353,7 +353,7 @@ class _GamesScreenState extends State<GamesScreen> {
                 child: Text(
                   widget.market.name.toUpperCase(),
                   style: GoogleFonts.cinzel(
-                    color: const Color(0xFFD4E3F8), // Darker brown, no harsh contrast
+                    color: const Color(0xFFF3E7D0), // Darker brown, no harsh contrast
                     fontSize: 24,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 3,
@@ -394,19 +394,19 @@ class _GameCard extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
               gradient: const LinearGradient(
-                colors: [Color(0xFF14284A), Color(0xFF284D7E)], // Yellow gradient
+                colors: [Color(0xFF084A35), Color(0xFF176C4B)], // Yellow gradient
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
               border: Border.all(
-                color: enabled ? const Color(0xFF5EA8F5) : const Color(0xFF8B6914), // Amber border
+                color: enabled ? const Color(0xFFD6AA41) : const Color(0xFF8B6914), // Amber border
                 width: 1.4,
               ),
               // 🚀 NO BLACK SHADOW — Only amber glow
               boxShadow: enabled
                   ? [
                 BoxShadow(
-                  color: const Color(0xFF5EA8F5).withValues(alpha: 0.25),
+                  color: const Color(0xFFD6AA41).withValues(alpha: 0.25),
                   blurRadius: 12,
                   offset: const Offset(0, 4),
                 ),
@@ -423,7 +423,7 @@ class _GameCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(16),
                         gradient: RadialGradient(
                           colors: [
-                            const Color(0xFF70B6FF).withValues(alpha: 0.15),
+                            const Color(0xFFE2BC62).withValues(alpha: 0.15),
                             Colors.transparent,
                           ],
                           radius: 0.9,
@@ -447,7 +447,7 @@ class _GameCard extends StatelessWidget {
                       padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: const Color(0xFF1C3459),
+                        color: const Color(0xFF0A4A35),
                         border: Border.all(color: const Color(0xFFE74C3C), width: 1.2),
                       ),
                       child: const Icon(Icons.lock_rounded, color: Color(0xFFE74C3C), size: 14),
@@ -485,7 +485,7 @@ class _GameCard extends StatelessWidget {
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: GoogleFonts.cinzel(
-                                color: const Color(0xFFD4E3F8), // Deep warm brown
+                                color: const Color(0xFFF3E7D0), // Deep warm brown
                                 fontSize: 13,
                                 fontWeight: FontWeight.w700,
                                 letterSpacing: 1.4,
@@ -512,7 +512,7 @@ class _CornerOrnamentPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final p = Paint()
-      ..color = const Color(0xFF5EA8F5) // Amber corners to match theme
+      ..color = const Color(0xFFD6AA41) // Amber corners to match theme
       ..strokeWidth = 1.3
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;

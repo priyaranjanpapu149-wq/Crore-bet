@@ -136,7 +136,7 @@ export default function Home() {
                {/* Download buttons */}
             <div className="flex flex-wrap gap-3 items-center">
               <a
-                href="https://crorebetapp.com/apk/crorebetapp.apk"
+                href={import.meta.env.VITE_APP_DOWNLOAD_URL || 'https://crorebetapp.com/apk/crorebetapp.apk'}
                 download
                 className="group relative transition-transform hover:scale-105 active:scale-95"
               >

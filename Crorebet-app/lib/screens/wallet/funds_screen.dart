@@ -114,7 +114,7 @@
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 gradient: const LinearGradient(
-                  colors: [Color(0xFF25456F), Color(0xFF1C3459)],
+                  colors: [Color(0xFF146043), Color(0xFF0A4A35)],
                 ),
                 border: FlameBorder(width: 1.3),
               ),
@@ -153,7 +153,7 @@
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(14),
             gradient: const LinearGradient(
-              colors: [Color(0xFF1C3459), Color(0xFF1C3459)],
+              colors: [Color(0xFF0A4A35), Color(0xFF0A4A35)],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -198,7 +198,7 @@
                     FlameText(child: Text(
                       subtitle,
                       style: GoogleFonts.lato(
-                        color: const Color(0xFFE9F1FF),
+                        color: const Color(0xFFFFF8EB),
                         fontSize: 12,
                         fontWeight: FontWeight.w500,
                         height: 1.4,
@@ -213,7 +213,7 @@
                 height: 38,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: const Color(0xFF25456F),
+                  color: const Color(0xFF146043),
                   border: FlameBorder(width: 1.1),
                 ),
                 child: const Icon(Icons.chevron_right_rounded,

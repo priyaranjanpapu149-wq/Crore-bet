@@ -6,6 +6,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import Dashboard from './pages/Dashboard';
 import Placeholder from './pages/Placeholder';
 import Referrals from './pages/Referrals';
+import Support from './pages/Support';
 import UserList from './pages/Users/UserList';
 import UserView from './pages/Users/UserView';
 import UnapprovedUsers from './pages/Users/UnapprovedUsers';
@@ -66,6 +67,7 @@ export default function App() {
           <Route path="/users/unapproved" element={<UnapprovedUsers />} />
           <Route path="/users/:id" element={<UserView />} />
           <Route path="/referrals" element={<Referrals />} />
+          <Route path="/support" element={<Support />} />
           <Route path="*" element={<Placeholder />} />
 <Route path="/deposits" element={<Deposits />} />
 <Route path="/auto-result" element={<AutoResult />} />

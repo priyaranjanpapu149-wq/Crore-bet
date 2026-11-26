@@ -11,6 +11,20 @@ import '../../config/colors.dart';
 import '../../services/api_service.dart';
 import '../../widgets/cosmic_background.dart';
 
+@visibleForTesting
+String cbShareBranding(String message) => message
+    .replaceAll(
+      RegExp(r'https?://(?:www\.)?magicbossapp\.com(?=/|\?|#|$)', caseSensitive: false),
+      'https://crorebet.com',
+    )
+    .replaceAll(
+      RegExp(r'(?<![A-Za-z0-9])(?:magic\s*boss|crore\s*bet)(?![A-Za-z0-9.-])', caseSensitive: false),
+      'CB',
+    );
+
+@visibleForTesting
+String cbReferralLink(String code) => Uri.https('crorebet.com', '/register', {'ref': code}).toString();
+
 class ShareNowScreen extends StatefulWidget {
   const ShareNowScreen({super.key});
 
@@ -106,19 +120,19 @@ class _ShareNowScreenState extends State<ShareNowScreen> {
         p['referral_code'] ??
         '')
         .toString();
-    _message = (p['message'] ??
+    _message = cbShareBranding((p['message'] ??
         p['referralMessage'] ??
         p['shareMessage'] ??
         p['text'] ??
         '')
-        .toString();
-    _link = (p['link'] ??
+        .toString());
+    _link = cbShareBranding((p['link'] ??
         p['referralLink'] ??
         p['shareLink'] ??
         (_code.isNotEmpty
-            ? 'https://magicbossapp.com/register?ref=$_code'
+            ? cbReferralLink(_code)
             : ''))
-        .toString();
+        .toString());
     _totalReferred = _num(p['totalReferred'] ??
         p['referredCount'] ??
         p['totalReferrals'] ??
@@ -160,7 +174,7 @@ class _ShareNowScreenState extends State<ShareNowScreen> {
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(msg ?? 'copied'.tr()),
-      backgroundColor: const Color(0xFF25456F),
+      backgroundColor: const Color(0xFF146043),
       behavior: SnackBarBehavior.floating,
     ));
   }
@@ -231,7 +245,7 @@ class _ShareNowScreenState extends State<ShareNowScreen> {
     }
     return RefreshIndicator(
       color: const Color(0xFFF5F8FF),
-      backgroundColor: const Color(0xFF25456F),
+      backgroundColor: const Color(0xFF146043),
       onRefresh: _load,
       child: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
@@ -300,7 +314,7 @@ class _ShareNowScreenState extends State<ShareNowScreen> {
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: const Color(0xFF1C3459),
+              color: const Color(0xFF0A4A35),
               border: FlameBorder(width: 1.6),
               boxShadow: [
                 BoxShadow(
@@ -334,7 +348,7 @@ class _ShareNowScreenState extends State<ShareNowScreen> {
             'referral_coming_soon'.tr(),
             textAlign: TextAlign.center,
             style: GoogleFonts.lato(
-              color: const Color(0xFFE9F1FF),
+              color: const Color(0xFFFFF8EB),
               fontSize: 13.5,
               height: 1.6,
             ),
@@ -372,13 +386,13 @@ class _ShareNowScreenState extends State<ShareNowScreen> {
           mainAxisSize: MainAxisSize.min,
           children: [
             const Icon(Icons.error_outline_rounded,
-                color: Color(0xFFB6C9E2), size: 50),
+                color: Color(0xFFE5D6B7), size: 50),
             const SizedBox(height: 12),
             Text(
               _error!,
               textAlign: TextAlign.center,
               style: GoogleFonts.lato(
-                  color: const Color(0xFFE9F1FF), fontSize: 14),
+                  color: const Color(0xFFFFF8EB), fontSize: 14),
             ),
             const SizedBox(height: 20),
             OutlinedButton(
@@ -414,7 +428,7 @@ class _ShareNowScreenState extends State<ShareNowScreen> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         gradient: const LinearGradient(
-          colors: [Color(0xFF1C3459), Color(0xFF1C3459)],
+          colors: [Color(0xFF0A4A35), Color(0xFF0A4A35)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -431,7 +445,7 @@ class _ShareNowScreenState extends State<ShareNowScreen> {
           Text(
             'your_referral_code'.tr(),
             style: GoogleFonts.lato(
-              color: const Color(0xFFE9F1FF),
+              color: const Color(0xFFFFF8EB),
               fontSize: 11.5,
               fontWeight: FontWeight.w600,
               letterSpacing: 2,
@@ -444,7 +458,7 @@ class _ShareNowScreenState extends State<ShareNowScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: const Color(0xFF25456F),
+                color: const Color(0xFF146043),
                 border: FlameBorder(width: 1.3),
               ),
               child: Row(
@@ -477,7 +491,7 @@ class _ShareNowScreenState extends State<ShareNowScreen> {
             _message.isNotEmpty ? _message : 'share_code_earn_text'.tr(),
             textAlign: TextAlign.center,
             style: GoogleFonts.lato(
-              color: const Color(0xFFE9F1FF),
+              color: const Color(0xFFFFF8EB),
               fontSize: 12,
               height: 1.4,
             ),
@@ -533,7 +547,7 @@ class _ShareNowScreenState extends State<ShareNowScreen> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(14),
           gradient: const LinearGradient(
-            colors: [Color(0xFF1C3459), Color(0xFF1C3459)],
+            colors: [Color(0xFF0A4A35), Color(0xFF0A4A35)],
           ),
           border: FlameBorder(width: 1.2),
         ),
@@ -544,7 +558,7 @@ class _ShareNowScreenState extends State<ShareNowScreen> {
               height: 40,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: const Color(0xFF25456F),
+                color: const Color(0xFF146043),
                 border: Border.all(color: color, width: 1.3),
               ),
               child: Icon(icon, color: color, size: 20),
@@ -599,7 +613,7 @@ class _ShareNowScreenState extends State<ShareNowScreen> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(14),
         gradient: const LinearGradient(
-          colors: [Color(0xFF1C3459), Color(0xFF1C3459)],
+          colors: [Color(0xFF0A4A35), Color(0xFF0A4A35)],
         ),
         border: FlameBorder(width: 1.2),
       ),
@@ -610,7 +624,7 @@ class _ShareNowScreenState extends State<ShareNowScreen> {
             height: 42,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: const Color(0xFF25456F),
+              color: const Color(0xFF146043),
               border: Border.all(color: color, width: 1.3),
             ),
             child: Icon(icon, color: color, size: 20),
@@ -619,7 +633,7 @@ class _ShareNowScreenState extends State<ShareNowScreen> {
           Text(
             label,
             style: GoogleFonts.lato(
-              color: const Color(0xFFE9F1FF),
+              color: const Color(0xFFFFF8EB),
               fontSize: 10,
               fontWeight: FontWeight.w700,
               letterSpacing: 1.2,
@@ -679,7 +693,7 @@ class _ShareNowScreenState extends State<ShareNowScreen> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         gradient: const LinearGradient(
-          colors: [Color(0xFF1C3459), Color(0xFF1C3459)],
+          colors: [Color(0xFF0A4A35), Color(0xFF0A4A35)],
         ),
         border: FlameBorder(width: 1),
       ),
@@ -690,7 +704,7 @@ class _ShareNowScreenState extends State<ShareNowScreen> {
             height: 40,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: const Color(0xFF25456F),
+              color: const Color(0xFF146043),
               border: FlameBorder(width: 1.1),
             ),
             child: const Icon(Icons.person_rounded,
@@ -713,7 +727,7 @@ class _ShareNowScreenState extends State<ShareNowScreen> {
                   Text(
                     _maskMobile(mobile),
                     style: GoogleFonts.lato(
-                      color: const Color(0xFFE9F1FF),
+                      color: const Color(0xFFFFF8EB),
                       fontSize: 11.5,
                     ),
                   ),
@@ -724,7 +738,7 @@ class _ShareNowScreenState extends State<ShareNowScreen> {
             Text(
               _shortDate(joinedAt),
               style: GoogleFonts.lato(
-                color: const Color(0xFFB6C9E2),
+                color: const Color(0xFFE5D6B7),
                 fontSize: 11,
               ),
             ),
@@ -759,7 +773,7 @@ class _ShareNowScreenState extends State<ShareNowScreen> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(14),
         gradient: const LinearGradient(
-          colors: [Color(0xFF1C3459), Color(0xFF1C3459)],
+          colors: [Color(0xFF0A4A35), Color(0xFF0A4A35)],
         ),
         border: FlameBorder(width: 1.2),
       ),
@@ -813,7 +827,7 @@ class _ShareNowScreenState extends State<ShareNowScreen> {
             child: Text(
               text,
               style: GoogleFonts.lato(
-                color: const Color(0xFFE9F1FF),
+                color: const Color(0xFFFFF8EB),
                 fontSize: 12.5,
                 height: 1.5,
               ),

@@ -82,7 +82,7 @@ class _GameRatesScreenState extends State<GameRatesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1C3459),
+      backgroundColor: const Color(0xFF0A4A35),
       body: CosmicBackground(
         child: SafeArea(
           child: Column(
@@ -215,7 +215,7 @@ class _GameRatesScreenState extends State<GameRatesScreen> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
             decoration: BoxDecoration(
-              color: const Color(0xFF25456F), // Light yellow
+              color: const Color(0xFF146043), // Light yellow
               borderRadius: BorderRadius.circular(20),
               border: Border.all(color: AppColors.gold, width: 1),
             ),
